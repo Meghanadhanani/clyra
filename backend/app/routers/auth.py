@@ -120,3 +120,18 @@ def get_me(user: User = Depends(get_current_user), db: Session = Depends(get_db)
         "data": {"user": user, "workspace": workspace},
         "message": "Current user fetched",
     }
+
+
+@router.post(
+    "/auth/logout",
+    summary="Log out the current browser session",
+)
+def logout(response: Response):
+    """Remove the login cookie from the user's browser."""
+    response.delete_cookie(
+        key="access_token",
+        httponly=True,
+        secure=COOKIE_SECURE,
+        samesite="lax",
+    )
+    return {"data": None, "message": "Logged out"}
