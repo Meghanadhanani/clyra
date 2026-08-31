@@ -29,6 +29,12 @@ class AuthService:
         return db.query(User).filter(User.email == email).first()
 
     @staticmethod
+    def get_workspace_for_user(db: Session, user: User) -> Workspace | None:
+        if user.workspace_id is None:
+            return None
+        return db.query(Workspace).filter(Workspace.id == user.workspace_id).first()
+
+    @staticmethod
     def make_unique_slug(db: Session, workspace_name: str) -> str:
         base_slug = re.sub(r"[^a-z0-9]+", "-", workspace_name.lower()).strip("-")
         base_slug = base_slug or "workspace"

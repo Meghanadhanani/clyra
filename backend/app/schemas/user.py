@@ -29,6 +29,15 @@ class UserCreate(BaseModel):
             raise ValueError("Password cannot start or end with spaces")
         return value
 
+class LoginRequest(BaseModel):
+    email: EmailStr = Field(..., examples=["john@example.com"])
+    password: str = Field(..., min_length=1, max_length=128)
+
+    @field_validator("email", mode="before")
+    @classmethod
+    def normalize_email(cls, value: str) -> str:
+        return value.strip().lower() if isinstance(value, str) else value
+
 
 class UserResponse(BaseModel):
     """Schema for sign-up response (never exposes password)."""
@@ -58,5 +67,15 @@ class SignupData(BaseModel):
 
 
 class SignupResponse(BaseModel):
+    data: SignupData
+    message: str
+
+
+class LoginResponse(BaseModel):
+    data: SignupData
+    message: str
+
+
+class CurrentUserResponse(BaseModel):
     data: SignupData
     message: str
