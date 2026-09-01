@@ -141,7 +141,7 @@ export default function SignupPage() {
     <div className="relative min-h-screen w-full bg-[#070709] text-white flex flex-col justify-between overflow-x-hidden font-sans select-none">
       {/* ================= FULL BACKGROUND IMAGE LAYER (manImg1.png) ================= */}
       <div
-        className="absolute inset-0 bg-cover bg-[right_bottom] sm:bg-[right_center] bg-no-repeat pointer-events-none z-0 opacity-85 transition-opacity duration-700"
+        className="absolute inset-0 bg-cover bg-[right_bottom] sm:bg-[right_center] bg-no-repeat pointer-events-none z-0 opacity-100 transition-opacity duration-700"
         style={{
           backgroundImage: "url('/assets/manImg1.png')",
         }}
@@ -156,20 +156,20 @@ export default function SignupPage() {
 
       {/* ================= TOP HEADER BAR ================= */}
       <header className="relative z-20 w-full max-w-7xl mx-auto px-6 sm:px-12 py-6 flex items-center justify-between">
-        <Link href="/" className="flex items-center gap-3.5 group">
+        <Link href="/" className="flex items-center gap-3 sm:gap-4 group">
           <img
             src="/assets/logo.png"
             alt="CLYRA"
-            className="w-9 h-9 sm:w-10 sm:h-10 object-contain drop-shadow-[0_0_12px_rgba(255,230,0,0.45)] group-hover:scale-105 transition-transform"
+            className="w-12 h-12 sm:w-16 sm:h-16 object-contain drop-shadow-[0_0_15px_rgba(255,230,0,0.45)] group-hover:scale-105 transition-transform"
           />
-          <span className="font-bold text-xl sm:text-2xl tracking-wider text-[#EDEDEF]">
+          <span className="font-bold text-2xl sm:text-3xl tracking-wider text-[#EDEDEF]">
             CLYRA
           </span>
         </Link>
 
         <Link
           href="/login"
-          className="px-5 py-2.5 rounded-lg bg-[#151517] hover:bg-[#1E1E22] border border-[#2A2A30] hover:border-[#FFE600] text-xs font-semibold text-[#D1D1D6] hover:text-[#FFE600] transition-all shadow-sm"
+          className="px-6 sm:px-7 h-10 sm:h-10 rounded-lg bg-[#151517] hover:bg-[#1E1E22] border border-[#2A2A30] hover:border-[#FFE600] text-xs sm:text-sm font-semibold text-[#D1D1D6] hover:text-[#FFE600] flex items-center justify-center transition-all shadow-sm"
         >
           Sign In
         </Link>
