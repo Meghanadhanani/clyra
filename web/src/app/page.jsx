@@ -25,17 +25,15 @@ export default function LandingPage() {
     <div className="relative min-h-screen w-full bg-[#070709] text-white flex flex-col overflow-x-hidden font-sans select-none">
       {/* ================= FLOATING CENTERED EXPANDED NAVBAR CARD ================= */}
       <div
-        className={`fixed top-6 left-1/2 -translate-x-1/2 z-50 w-[92%] max-w-3xl bg-[#151517]/95 backdrop-blur-2xl border border-[#2A2A30] rounded-2xl p-5 shadow-[0_25px_60px_rgba(0,0,0,0.95),0_0_30px_rgba(255,230,0,0.08)] transform-gpu origin-top transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${
-          menuOpen
-            ? "translate-y-0 opacity-100 scale-100 blur-0 pointer-events-auto flex flex-col justify-between gap-4"
-            : "-translate-y-6 opacity-0 scale-95 blur-md pointer-events-none flex flex-col justify-between gap-4"
-        }`}
+        className={`fixed top-6 left-1/2 -translate-x-1/2 z-50 w-[92%] max-w-3xl bg-[#151517]/95 backdrop-blur-2xl border border-[#2A2A30] rounded-2xl p-5 shadow-[0_25px_60px_rgba(0,0,0,0.95),0_0_30px_rgba(255,230,0,0.08)] transform-gpu origin-top transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${menuOpen
+          ? "translate-y-0 opacity-100 scale-100 blur-0 pointer-events-auto flex flex-col justify-between gap-4"
+          : "-translate-y-6 opacity-0 scale-95 blur-md pointer-events-none flex flex-col justify-between gap-4"
+          }`}
       >
         {/* Top Row: Brand on left + Sign In & Sign Up buttons on right (replacing close button) */}
         <div
-          className={`w-full flex items-center justify-between pb-3.5 border-b border-[#2A2A30] transition-all duration-500 delay-75 ${
-            menuOpen ? "translate-y-0 opacity-100" : "-translate-y-2 opacity-0"
-          }`}
+          className={`w-full flex items-center justify-between pb-3.5 border-b border-[#2A2A30] transition-all duration-500 delay-75 ${menuOpen ? "translate-y-0 opacity-100" : "-translate-y-2 opacity-0"
+            }`}
         >
           <Link href="/" className="flex items-center gap-3.5 group">
             <img
@@ -68,9 +66,8 @@ export default function LandingPage() {
 
         {/* Center: Navigation Links Row with staggered reveal */}
         <nav
-          className={`grid grid-cols-2 sm:grid-cols-4 gap-2.5 text-center transition-all duration-500 delay-100 ${
-            menuOpen ? "translate-y-0 opacity-100" : "translate-y-3 opacity-0"
-          }`}
+          className={`grid grid-cols-2 sm:grid-cols-4 gap-2.5 text-center transition-all duration-500 delay-100 ${menuOpen ? "translate-y-0 opacity-100" : "translate-y-3 opacity-0"
+            }`}
         >
           <Link
             href="#features"
@@ -111,30 +108,37 @@ export default function LandingPage() {
         />
       )}
 
-      {/* ================= 1ST SCREEN (HERO) WITH DEDICATED BG (bgImg.png) ================= */}
-      <div className="relative min-h-screen w-full flex flex-col justify-between overflow-hidden">
-        {/* Background Image Layer (Strictly contained in Screen 1) */}
+      {/* ================= 1ST SCREEN (HERO) WITH DEDICATED BG ================= */}
+      <div className="relative min-h-screen w-full flex flex-col justify-start sm:justify-between overflow-hidden">
+        {/* Mobile Background Image Layer (bgImgresponsive.png for small screens) */}
         <div
-           className="absolute -inset-x-0 -top-12 -bottom-0 bg-cover bg-[center_35%] scale-110 -translate-y-8 bg-no-repeat pointer-events-none z-0 opacity-70 transition-opacity duration-700"
-        style={{
-          backgroundImage: "url('/assets/bgImg.png')",
-        }}
+          className="block sm:hidden absolute inset-0 bg-cover bg-center bg-no-repeat pointer-events-none z-0 opacity-80 transition-opacity duration-700"
+          style={{
+            backgroundImage: "url('/assets/bgImgresponsive.png')",
+          }}
+        />
+
+        {/* Desktop Background Image Layer (bgImg.png for sm and larger) */}
+        <div
+          className="hidden sm:block absolute -inset-x-0 -top-12 -bottom-0 bg-cover bg-[center_35%] scale-110 -translate-y-8 bg-no-repeat pointer-events-none z-0 opacity-70 transition-opacity duration-700"
+          style={{
+            backgroundImage: "url('/assets/bgImg.png')",
+          }}
         />
 
         {/* Top Black Gradient to cleanly mask top watermark */}
-        <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-[#070709] via-[#070709]/90 to-transparent pointer-events-none z-0" />
+        <div className="absolute top-0 left-0 right-0 h-24 sm:h-32 bg-gradient-to-b from-[#070709] via-[#070709]/90 to-transparent pointer-events-none z-0" />
 
         {/* Subtle Radial Glow & Bottom Transition Gradient */}
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-transparent via-[#070709]/50 to-[#070709] pointer-events-none z-0" />
         <div className="absolute bottom-0 inset-x-0 h-32 bg-gradient-to-t from-[#070709] via-[#070709]/80 to-transparent pointer-events-none z-0" />
 
         {/* Center Logo Trigger */}
-        <header className="relative z-30 w-full max-w-7xl mx-auto px-6 lg:px-12 py-6 flex items-center justify-center">
+        <header className="relative z-30 w-full max-w-7xl mx-auto px-6 lg:px-12 pt-4 pb-1 sm:py-6 flex items-center justify-center">
           <button
             onClick={() => setMenuOpen(true)}
-            className={`flex items-center gap-3.5 px-6 py-3 rounded-lg bg-[#0F0F10]/95 hover:bg-[#151517] border border-[#2A2A30] hover:border-[#FFE600]/80 backdrop-blur-xl shadow-[0_10px_35px_rgba(0,0,0,0.9),0_0_20px_rgba(255,230,0,0.15)] group transition-all duration-300 ease-out cursor-pointer hover:scale-102 active:scale-98 ${
-              menuOpen ? "opacity-0 scale-90 pointer-events-none" : "opacity-100 scale-100 pointer-events-auto"
-            }`}
+            className={`flex items-center gap-3.5 px-6 py-3 rounded-lg bg-[#0F0F10]/95 hover:bg-[#151517] border border-[#2A2A30] hover:border-[#FFE600]/80 backdrop-blur-xl shadow-[0_10px_35px_rgba(0,0,0,0.9),0_0_20px_rgba(255,230,0,0.15)] group transition-all duration-300 ease-out cursor-pointer hover:scale-102 active:scale-98 ${menuOpen ? "opacity-0 scale-90 pointer-events-none" : "opacity-100 scale-100 pointer-events-auto"
+              }`}
             title="Click to open menu"
           >
             <img
@@ -148,8 +152,9 @@ export default function LandingPage() {
           </button>
         </header>
 
-        {/* Hero Content */}
-      <main className="relative z-10 w-full max-w-4xl mx-auto px-6 py-8 md:py-12 flex flex-col items-center justify-center text-center my-auto">          {/* Hero Title with Deep Cinematic Text Shadow */}
+        {/* Hero Content (Starts directly below navbar on small screens) */}
+        <main className="relative z-10 w-full max-w-4xl mx-auto px-6 pt-25 sm:pt-4 pb-8 sm:pb-12 flex flex-col items-center justify-center text-center my-0 sm:my-auto">
+          {/* Hero Title with Deep Cinematic Text Shadow */}
           <h1 className="text-3xl sm:text-5xl lg:text-6xl font-extrabold text-white tracking-tight leading-[1.15] drop-shadow-[0_10px_30px_rgba(0,0,0,0.95)]">
             Customer Support That Resolves Itself in{" "}
             <span className="text-[#FFE600] drop-shadow-[0_0_35px_rgba(255,230,0,0.45)]">
@@ -162,24 +167,24 @@ export default function LandingPage() {
             Meet CLYRA — the autonomous AI engine that handles inquiries, tracks orders, and manages support workflows with sub-2s response times and 80%+ instant resolution.
           </p>
 
-          {/* Hero CTA Action Group with Design System Primary & Outline Buttons */}
-          <div className="mt-8 flex flex-col sm:flex-row items-center gap-3.5 w-full sm:w-auto">
+          {/* Hero CTA Action Group: Side by side on mobile and desktop */}
+          <div className="mt-8 flex flex-row items-center justify-center gap-3 w-full sm:w-auto max-w-sm sm:max-w-none mx-auto">
             {/* Primary #FFE600 Button */}
             <Link
               href="/signup"
-              className="w-full sm:w-auto px-7 py-3 rounded-lg bg-[#FFE600] hover:bg-[#ffe81a] active:bg-[#FFE600]/80 text-black text-xs sm:text-sm font-bold transition-all shadow-[0_4px_20px_rgba(255,230,0,0.35)] hover:shadow-[0_0_25px_#FFE600] hover:scale-102 active:scale-98 flex items-center justify-center gap-2 cursor-pointer"
+              className="flex-1 sm:flex-initial px-5 sm:px-7 py-3 rounded-lg bg-[#FFE600] hover:bg-[#ffe81a] active:bg-[#FFE600]/80 text-black text-xs sm:text-sm font-bold transition-all shadow-[0_4px_20px_rgba(255,230,0,0.35)] hover:shadow-[0_0_25px_#FFE600] hover:scale-102 active:scale-98 flex items-center justify-center gap-1.5 sm:gap-2 cursor-pointer text-center"
             >
               <span>Get Started</span>
-              <ArrowRight className="w-4 h-4" />
+              <ArrowRight className="w-3.5 h-3.5 sm:w-4 sm:h-4 shrink-0" />
             </Link>
 
             {/* Design System Outline Button */}
             <Link
               href="/login"
-              className="w-full sm:w-auto px-7 py-3 rounded-lg bg-transparent hover:bg-[#FFE600]/10 border border-[#FFE600] text-[#FFE600] text-xs sm:text-sm font-semibold transition-all shadow-[0_0_15px_rgba(255,230,0,0.15)] hover:shadow-[0_0_20px_rgba(255,230,0,0.3)] flex items-center justify-center gap-2 hover:scale-102 active:scale-98"
+              className="flex-1 sm:flex-initial px-5 sm:px-7 py-3 rounded-lg bg-transparent hover:bg-[#FFE600]/10 border border-[#FFE600] text-[#FFE600] text-xs sm:text-sm font-semibold transition-all shadow-[0_0_15px_rgba(255,230,0,0.15)] hover:shadow-[0_0_20px_rgba(255,230,0,0.3)] flex items-center justify-center gap-1.5 sm:gap-2 hover:scale-102 active:scale-98 text-center"
             >
               <span>Launch Workspace</span>
-              <ArrowUpRight className="w-4 h-4" />
+              <ArrowUpRight className="w-3.5 h-3.5 sm:w-4 sm:h-4 shrink-0" />
             </Link>
           </div>
 
@@ -204,7 +209,7 @@ export default function LandingPage() {
       </div>
 
       {/* ================= 2ND SCREEN: BENTO GRID WITH LIQUID GLASS EFFECT (bgLandingImg2.png) ================= */}
-      <section id="features" className="relative z-10 w-full min-h-screen py-20 lg:py-28 px-6 sm:px-12 lg:px-16 flex flex-col items-center justify-center overflow-hidden">
+      <section id="features" className="relative z-10 w-full min-h-screen px-6 sm:px-12 lg:px-16 flex flex-col items-center justify-center overflow-hidden">
         {/* Full Background Graphic (bgLandingImg2.png) */}
         <div
           className="absolute inset-0 bg-cover bg-center bg-no-repeat pointer-events-none z-0 opacity-85 transition-opacity duration-700"
@@ -221,12 +226,7 @@ export default function LandingPage() {
         <div className="relative z-10 w-full max-w-6xl mx-auto space-y-12">
           {/* Section Header */}
           <div className="text-center space-y-3.5 max-w-2xl mx-auto">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#151517]/90 backdrop-blur-xl border border-[#FFE600]/30 shadow-[0_0_15px_rgba(255,230,0,0.15)]">
-              <Sparkles className="w-3.5 h-3.5 text-[#FFE600] animate-pulse" />
-              <span className="text-[11px] font-bold tracking-wider uppercase text-[#EDEDEF]">
-                Autonomous Architecture
-              </span>
-            </div>
+
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-[#EDEDEF] tracking-tight leading-tight drop-shadow-[0_4px_20px_rgba(0,0,0,0.9)]">
               Next-Gen Support <span className="text-[#FFE600] drop-shadow-[0_0_25px_rgba(255,230,0,0.35)]">Intelligence</span>
             </h2>
@@ -241,7 +241,7 @@ export default function LandingPage() {
             <div className="md:col-span-7 bg-[#0F0F10]/75 hover:bg-[#151517]/85 backdrop-blur-2xl border border-white/10 hover:border-[#FFE600]/40 rounded-2xl p-6 sm:p-7 shadow-[0_20px_50px_rgba(0,0,0,0.7),inset_0_1px_1px_rgba(255,255,255,0.12)] transition-all duration-300 group flex flex-col justify-between relative overflow-hidden">
               {/* Liquid ambient glow inside card */}
               <div className="absolute top-0 right-0 w-64 h-64 bg-[#7B3DFF]/15 rounded-full blur-3xl pointer-events-none group-hover:bg-[#7B3DFF]/25 transition-all" />
-              
+
               <div className="space-y-4 relative z-10">
                 <div className="flex items-center justify-between">
                   <div className="w-10 h-10 rounded-xl bg-[#1E1E22] border border-[#7B3DFF]/40 flex items-center justify-center text-[#7B3DFF] shadow-[0_0_15px_rgba(123,61,255,0.25)]">
@@ -275,7 +275,7 @@ export default function LandingPage() {
             {/* Bento Card 2 (Span 5) - Real-Time Order & Logistics Sync */}
             <div className="md:col-span-5 bg-[#0F0F10]/75 hover:bg-[#151517]/85 backdrop-blur-2xl border border-white/10 hover:border-[#FFE600]/40 rounded-2xl p-6 sm:p-7 shadow-[0_20px_50px_rgba(0,0,0,0.7),inset_0_1px_1px_rgba(255,255,255,0.12)] transition-all duration-300 group flex flex-col justify-between relative overflow-hidden">
               <div className="absolute top-0 right-0 w-48 h-48 bg-[#FFE600]/10 rounded-full blur-3xl pointer-events-none group-hover:bg-[#FFE600]/20 transition-all" />
-              
+
               <div className="space-y-4 relative z-10">
                 <div className="flex items-center justify-between">
                   <div className="w-10 h-10 rounded-xl bg-[#1E1E22] border border-[#FFE600]/40 flex items-center justify-center text-[#FFE600] shadow-[0_0_15px_rgba(255,230,0,0.2)]">
@@ -304,7 +304,7 @@ export default function LandingPage() {
             {/* Bento Card 3 (Span 5) - Neural Guardrails */}
             <div className="md:col-span-5 bg-[#0F0F10]/75 hover:bg-[#151517]/85 backdrop-blur-2xl border border-white/10 hover:border-[#FFE600]/40 rounded-2xl p-6 sm:p-7 shadow-[0_20px_50px_rgba(0,0,0,0.7),inset_0_1px_1px_rgba(255,255,255,0.12)] transition-all duration-300 group flex flex-col justify-between relative overflow-hidden">
               <div className="absolute top-0 right-0 w-48 h-48 bg-[#4D7BFF]/10 rounded-full blur-3xl pointer-events-none group-hover:bg-[#4D7BFF]/20 transition-all" />
-              
+
               <div className="space-y-4 relative z-10">
                 <div className="flex items-center justify-between">
                   <div className="w-10 h-10 rounded-xl bg-[#1E1E22] border border-[#4D7BFF]/40 flex items-center justify-center text-[#4D7BFF] shadow-[0_0_15px_rgba(77,123,255,0.2)]">
@@ -333,7 +333,7 @@ export default function LandingPage() {
             {/* Bento Card 4 (Span 7) - Real-Time Telemetry & Insights */}
             <div className="md:col-span-7 bg-[#0F0F10]/75 hover:bg-[#151517]/85 backdrop-blur-2xl border border-white/10 hover:border-[#FFE600]/40 rounded-2xl p-6 sm:p-7 shadow-[0_20px_50px_rgba(0,0,0,0.7),inset_0_1px_1px_rgba(255,255,255,0.12)] transition-all duration-300 group flex flex-col justify-between relative overflow-hidden">
               <div className="absolute top-0 right-0 w-64 h-64 bg-[#FFE600]/15 rounded-full blur-3xl pointer-events-none group-hover:bg-[#FFE600]/25 transition-all" />
-              
+
               <div className="space-y-4 relative z-10">
                 <div className="flex items-center justify-between">
                   <div className="w-10 h-10 rounded-xl bg-[#1E1E22] border border-[#FFE600]/40 flex items-center justify-center text-[#FFE600] shadow-[0_0_15px_rgba(255,230,0,0.2)]">
