@@ -30,8 +30,8 @@ class UserCreate(BaseModel):
         return value
 
 class LoginRequest(BaseModel):
-    email: EmailStr = Field(..., examples=["john@example.com"])
-    password: str = Field(..., min_length=1, max_length=128)
+    email: EmailStr = Field(..., examples=["megha122@gmail.com"])
+    password: str = Field(..., min_length=1, max_length=128, examples=["meghana@1904"])
 
     @field_validator("email", mode="before")
     @classmethod
@@ -57,6 +57,7 @@ class WorkspaceResponse(BaseModel):
     name: str
     slug: str
     plan: str
+    ai_system_prompt: str | None = None
 
     model_config = {"from_attributes": True}
 

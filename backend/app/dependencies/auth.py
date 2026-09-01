@@ -14,7 +14,6 @@ def get_current_user(
     access_token: str | None = Cookie(default=None),
     db: Session = Depends(get_db),
 ) -> User:
-    """Read the login cookie and return the real user from the database."""
     if access_token is None:
         raise AppError(
             status_code=status.HTTP_401_UNAUTHORIZED,
