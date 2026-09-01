@@ -16,7 +16,7 @@ import {
   Mail,
   User,
 } from "lucide-react";
-import { signup } from "@/service/auth.service";
+import { signup } from "../../../service/auth.service";
 
 export default function SignupPage() {
   const router = useRouter();
@@ -138,275 +138,255 @@ export default function SignupPage() {
   };
 
   return (
-    <div className="min-h-screen w-full bg-gradient-to-b from-[#FFFDF9] via-[#FFF8E7] to-[#FDF1CC] p-4 sm:p-8 flex items-center justify-center font-sans">
-      <div className="w-full max-w-[1080px] bg-white/90 backdrop-blur-md rounded-[32px] shadow-xl border border-[#E8DFC8]/80 overflow-hidden flex flex-col md:flex-row min-h-[680px]">
-        
-        {/* Left Brand Showcase */}
-        <div className="hidden md:flex md:w-5/12 bg-[#FAF7EF] p-8 lg:p-10 flex-col justify-between border-r border-[#EFE8D6] relative overflow-hidden">
-          <div className="space-y-4 relative z-10">
-            <Link href="/" className="inline-flex items-center gap-3">
-              <div className="w-9 h-9 rounded-full border-2 border-[#1A1C1E] flex items-center justify-center">
-                <div className="w-4 h-4 rounded-full border border-[#1A1C1E] border-t-transparent rotate-45" />
-              </div>
-              <span className="font-extrabold text-2xl tracking-tight text-[#1A1C1E]">
-                CLYRA
-              </span>
-            </Link>
-            <p className="text-xs font-semibold text-stone-500 uppercase tracking-wider">
-              Autonomous Support Intelligence
+    <div className="relative min-h-screen w-full bg-[#070709] text-white flex flex-col justify-between overflow-x-hidden font-sans select-none">
+      {/* ================= FULL BACKGROUND IMAGE LAYER (manImg1.png) ================= */}
+      <div
+        className="absolute inset-0 bg-cover bg-[right_bottom] sm:bg-[right_center] bg-no-repeat pointer-events-none z-0 opacity-85 transition-opacity duration-700"
+        style={{
+          backgroundImage: "url('/assets/manImg1.png')",
+        }}
+      />
+
+      {/* Left-to-Right Dark Gradient for crisp form readability */}
+      <div className="absolute inset-0 bg-gradient-to-r from-[#070709] via-[#070709]/85 md:via-[#070709]/75 to-transparent pointer-events-none z-0" />
+
+      {/* Top and Bottom edge gradients for smooth blending */}
+      <div className="absolute top-0 inset-x-0 h-28 bg-gradient-to-b from-[#070709] via-[#070709]/80 to-transparent pointer-events-none z-0" />
+      <div className="absolute bottom-0 inset-x-0 h-28 bg-gradient-to-t from-[#070709] via-[#070709]/80 to-transparent pointer-events-none z-0" />
+
+      {/* ================= TOP HEADER BAR ================= */}
+      <header className="relative z-20 w-full max-w-7xl mx-auto px-6 sm:px-12 py-6 flex items-center justify-between">
+        <Link href="/" className="flex items-center gap-3.5 group">
+          <img
+            src="/assets/logo.png"
+            alt="CLYRA"
+            className="w-9 h-9 sm:w-10 sm:h-10 object-contain drop-shadow-[0_0_12px_rgba(255,230,0,0.45)] group-hover:scale-105 transition-transform"
+          />
+          <span className="font-bold text-xl sm:text-2xl tracking-wider text-[#EDEDEF]">
+            CLYRA
+          </span>
+        </Link>
+
+        <Link
+          href="/login"
+          className="px-5 py-2.5 rounded-lg bg-[#151517] hover:bg-[#1E1E22] border border-[#2A2A30] hover:border-[#FFE600] text-xs font-semibold text-[#D1D1D6] hover:text-[#FFE600] transition-all shadow-sm"
+        >
+          Sign In
+        </Link>
+      </header>
+
+      {/* ================= MAIN CONTENT (LEFT ALIGNED FORM) ================= */}
+      <main className="relative z-10 w-full max-w-7xl mx-auto px-6 sm:px-12 lg:px-16 py-6 sm:py-10 flex flex-col justify-center my-auto">
+        <div className="max-w-lg w-full space-y-6">
+          {/* Header Title */}
+          <div>
+            <h1 className="text-3xl sm:text-4xl font-extrabold text-[#EDEDEF] tracking-tight leading-tight drop-shadow-[0_4px_16px_rgba(0,0,0,0.9)]">
+              Create your <span className="text-[#FFE600] drop-shadow-[0_0_25px_rgba(255,230,0,0.35)]">workspace</span>
+            </h1>
+            <p className="text-xs sm:text-sm font-normal text-[#9E9EA8] mt-2 leading-relaxed">
+              Deploy autonomous AI support for your store and digital workflows in under 2 minutes.
             </p>
           </div>
 
-          <div className="space-y-4 my-6 relative z-10">
-            <div className="bg-gradient-to-b from-[#FEF08A] to-[#FFFDF9] border border-[#FDE047] rounded-2xl p-4 shadow-sm space-y-2">
+          {error && (
+            <div className="p-3.5 rounded-lg bg-[#1F0E0E] border border-[#EF4444]/60 text-[#EF4444] text-xs flex items-start gap-2.5 shadow-lg">
+              <AlertCircle className="w-4 h-4 shrink-0 mt-0.5" />
+              <span className="leading-relaxed font-medium">{error}</span>
+            </div>
+          )}
+
+          {successData && (
+            <div className="p-3.5 rounded-lg bg-[#0E1F18] border border-[#10B981]/60 text-[#10B981] text-xs flex items-start gap-2.5 shadow-lg">
+              <CheckCircle2 className="w-4 h-4 shrink-0 mt-0.5 text-[#FFE600]" />
+              <div>
+                <p className="font-bold text-[#EDEDEF]">Account Created!</p>
+                <p className="text-[11px] text-[#B8B8BE] mt-0.5">
+                  Welcome, {successData.userName}! Redirecting to {successData.workspaceName}...
+                </p>
+              </div>
+            </div>
+          )}
+
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+              <div className="space-y-1.5">
+                <label className="block text-xs font-semibold text-[#D1D1D6]">
+                  Full Name
+                </label>
+                <div className="relative">
+                  <User className="w-4 h-4 text-[#85858D] absolute left-3.5 top-1/2 -translate-y-1/2" />
+                  <input
+                    name="name"
+                    type="text"
+                    required
+                    placeholder="Jane Doe"
+                    value={formData.name}
+                    onChange={handleChange}
+                    className="w-full h-12 bg-[#0F0F10] border border-[#2A2A30] hover:border-[#45454D] outline-none focus:outline-none focus:ring-0 focus:border-[#FFE600] rounded-lg pl-10 pr-3.5 text-sm text-[#EDEDEF] placeholder-[#707078] transition-colors"
+                  />
+                </div>
+              </div>
+
+              <div className="space-y-1.5">
+                <label className="block text-xs font-semibold text-[#D1D1D6]">
+                  Workspace Name
+                </label>
+                <div className="relative">
+                  <Building2 className="w-4 h-4 text-[#85858D] absolute left-3.5 top-1/2 -translate-y-1/2" />
+                  <input
+                    name="workspace_name"
+                    type="text"
+                    required
+                    placeholder="StyleCart AI"
+                    value={formData.workspace_name}
+                    onChange={handleChange}
+                    className="w-full h-12 bg-[#0F0F10] border border-[#2A2A30] hover:border-[#45454D] outline-none focus:outline-none focus:ring-0 focus:border-[#FFE600] rounded-lg pl-10 pr-3.5 text-sm text-[#EDEDEF] placeholder-[#707078] transition-colors"
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div className="space-y-1.5">
+              <label className="block text-xs font-semibold text-[#D1D1D6]">
+                Work Email
+              </label>
+              <div className="relative">
+                <Mail className="w-4 h-4 text-[#85858D] absolute left-3.5 top-1/2 -translate-y-1/2" />
+                <input
+                  name="email"
+                  type="email"
+                  required
+                  placeholder="name@company.com"
+                  value={formData.email}
+                  onChange={handleChange}
+                  className="w-full h-12 bg-[#0F0F10] border border-[#2A2A30] hover:border-[#45454D] outline-none focus:outline-none focus:ring-0 focus:border-[#FFE600] rounded-lg pl-10 pr-4 text-sm text-[#EDEDEF] placeholder-[#707078] transition-colors"
+                />
+              </div>
+            </div>
+
+            <div className="space-y-1.5">
               <div className="flex items-center justify-between">
-                <span className="text-[10px] font-bold uppercase tracking-wider text-amber-900 bg-white/80 px-2 py-0.5 rounded-md shadow-2xs">
-                  Zero-Setup AI Pilot
-                </span>
-                <div className="w-6 h-6 rounded-full bg-black text-white flex items-center justify-center shrink-0">
-                  <ArrowUpRight className="w-3.5 h-3.5" />
-                </div>
-              </div>
-              <h4 className="text-xs font-bold text-[#1A1C1E] pt-1">
-                Omni-Channel Customer Resolution
-              </h4>
-              <p className="text-[11px] text-stone-500 font-medium leading-relaxed">
-                Connect Shopify, WhatsApp, and Web chat widgets in seconds.
-              </p>
-            </div>
-
-            <div className="bg-white/80 border border-[#EBE3D3] rounded-2xl p-4 shadow-2xs space-y-2">
-              <div className="flex items-center justify-between text-[11px] font-bold text-stone-700">
-                <span>AI Automated Support</span>
-                <span className="text-amber-600 font-mono">80%+</span>
-              </div>
-              <div className="w-full bg-stone-200 h-2 rounded-full overflow-hidden">
-                <div className="bg-[#FBBF24] h-full rounded-full w-4/5" />
-              </div>
-              <p className="text-[10px] text-stone-500">
-                Handles orders, returns, tracking, and FAQ resolution automatically.
-              </p>
-            </div>
-          </div>
-
-          <div className="flex items-center gap-2 text-xs font-semibold text-stone-600 relative z-10">
-            <div className="w-2 h-2 rounded-full bg-[#FBBF24] animate-pulse" />
-            <span>Multi-Tenant Architecture</span>
-          </div>
-        </div>
-
-        {/* Right Side: Sign Up Form */}
-        <div className="w-full md:w-7/12 p-7 sm:p-10 lg:p-12 flex flex-col justify-center">
-          <div className="max-w-md w-full mx-auto space-y-5">
-            <div>
-              <h2 className="text-2xl sm:text-3xl font-extrabold text-[#1A1C1E] tracking-tight">
-                Create your workspace
-              </h2>
-              <p className="text-xs sm:text-sm font-medium text-stone-500 mt-1">
-                Start your 14-day free trial. No credit card required.
-              </p>
-            </div>
-
-            {error && (
-              <div className="p-3.5 rounded-2xl bg-rose-50 border border-rose-200 text-rose-700 text-xs flex items-start gap-2.5">
-                <AlertCircle className="w-4 h-4 shrink-0 mt-0.5" />
-                <span className="leading-relaxed font-medium">{error}</span>
-              </div>
-            )}
-
-            {successData && (
-              <div className="p-3.5 rounded-2xl bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs flex items-start gap-2.5">
-                <CheckCircle2 className="w-4 h-4 shrink-0 mt-0.5" />
-                <div>
-                  <p className="font-bold">Account Created!</p>
-                  <p className="text-[11px] text-emerald-700 mt-0.5">
-                    Welcome, {successData.userName}! Redirecting to {successData.workspaceName}...
-                  </p>
-                </div>
-              </div>
-            )}
-
-            <form onSubmit={handleSubmit} className="space-y-3.5">
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
-                <div className="space-y-1">
-                  <label className="block text-xs font-bold text-stone-700">
-                    Full Name
-                  </label>
-                  <div className="relative">
-                    <User className="w-4 h-4 text-stone-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
-                    <input
-                      name="name"
-                      type="text"
-                      required
-                      placeholder="Jane Doe"
-                      value={formData.name}
-                      onChange={handleChange}
-                      className="w-full bg-white border border-[#EBE3D3] rounded-full py-2.5 pl-10 pr-3.5 text-xs text-stone-800 placeholder-stone-400 focus:outline-none focus:ring-2 focus:ring-[#FBBF24] transition-all"
-                    />
-                  </div>
-                </div>
-
-                <div className="space-y-1">
-                  <label className="block text-xs font-bold text-stone-700">
-                    Workspace Name
-                  </label>
-                  <div className="relative">
-                    <Building2 className="w-4 h-4 text-stone-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
-                    <input
-                      name="workspace_name"
-                      type="text"
-                      required
-                      placeholder="StyleCart AI"
-                      value={formData.workspace_name}
-                      onChange={handleChange}
-                      className="w-full bg-white border border-[#EBE3D3] rounded-full py-2.5 pl-10 pr-3.5 text-xs text-stone-800 placeholder-stone-400 focus:outline-none focus:ring-2 focus:ring-[#FBBF24] transition-all"
-                    />
-                  </div>
-                </div>
-              </div>
-
-              <div className="space-y-1">
-                <label className="block text-xs font-bold text-stone-700">
-                  Work Email
+                <label className="block text-xs font-semibold text-[#D1D1D6]">
+                  Password
                 </label>
-                <div className="relative">
-                  <Mail className="w-4 h-4 text-stone-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
-                  <input
-                    name="email"
-                    type="email"
-                    required
-                    placeholder="name@company.com"
-                    value={formData.email}
-                    onChange={handleChange}
-                    className="w-full bg-white border border-[#EBE3D3] rounded-full py-2.5 pl-10 pr-4 text-xs text-stone-800 placeholder-stone-400 focus:outline-none focus:ring-2 focus:ring-[#FBBF24] transition-all"
-                  />
-                </div>
-              </div>
-
-              <div className="space-y-1">
-                <div className="flex items-center justify-between">
-                  <label className="block text-xs font-bold text-stone-700">
-                    Password
-                  </label>
-                  {formData.password && (
-                    <span
-                      className={`text-[10px] font-bold ${
-                        passwordStrength <= 1
-                          ? "text-rose-600"
-                          : passwordStrength <= 3
-                          ? "text-amber-600"
-                          : "text-emerald-600"
-                      }`}
-                    >
-                      {getStrengthLabel()}
-                    </span>
-                  )}
-                </div>
-                <div className="relative">
-                  <Lock className="w-4 h-4 text-stone-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
-                  <input
-                    name="password"
-                    type={showPassword ? "text" : "password"}
-                    required
-                    placeholder="At least 8 characters"
-                    value={formData.password}
-                    onChange={handleChange}
-                    className="w-full bg-white border border-[#EBE3D3] rounded-full py-2.5 pl-10 pr-10 text-xs text-stone-800 placeholder-stone-400 focus:outline-none focus:ring-2 focus:ring-[#FBBF24] transition-all"
-                  />
-                  <button
-                    type="button"
-                    onClick={() => setShowPassword(!showPassword)}
-                    className="absolute right-3.5 top-1/2 -translate-y-1/2 text-stone-400 hover:text-stone-600 cursor-pointer"
-                  >
-                    {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
-                  </button>
-                </div>
-
                 {formData.password && (
-                  <div className="pt-1 flex gap-1 h-1">
-                    <div
-                      className={`flex-1 rounded-full ${
-                        passwordStrength >= 1 ? getStrengthColor() : "bg-stone-200"
-                      }`}
-                    />
-                    <div
-                      className={`flex-1 rounded-full ${
-                        passwordStrength >= 2 ? getStrengthColor() : "bg-stone-200"
-                      }`}
-                    />
-                    <div
-                      className={`flex-1 rounded-full ${
-                        passwordStrength >= 3 ? getStrengthColor() : "bg-stone-200"
-                      }`}
-                    />
-                    <div
-                      className={`flex-1 rounded-full ${
-                        passwordStrength >= 4 ? getStrengthColor() : "bg-stone-200"
-                      }`}
-                    />
-                  </div>
-                )}
-              </div>
-
-              <div className="pt-1">
-                <label className="flex items-start gap-2.5 cursor-pointer select-none">
-                  <input
-                    type="checkbox"
-                    checked={agreedToTerms}
-                    onChange={(e) => setAgreedToTerms(e.target.checked)}
-                    className="mt-0.5 w-4 h-4 rounded border-[#EBE3D3] text-[#1E2024] focus:ring-[#FBBF24] accent-[#1E2024]"
-                  />
-                  <span className="text-[11px] text-stone-600 leading-normal">
-                    I agree to the{" "}
-                    <span className="font-bold text-stone-800 underline underline-offset-2 cursor-pointer">
-                      Terms of Service
-                    </span>{" "}
-                    and{" "}
-                    <span className="font-bold text-stone-800 underline underline-offset-2 cursor-pointer">
-                      Privacy Policy
-                    </span>
-                    .
+                  <span
+                    className={`text-[10px] font-bold ${
+                      passwordStrength <= 1
+                        ? "text-[#FF3B30]"
+                        : passwordStrength <= 3
+                        ? "text-[#FFE600]"
+                        : "text-[#22C55E]"
+                    }`}
+                  >
+                    {getStrengthLabel()}
                   </span>
-                </label>
+                )}
+              </div>
+              <div className="relative">
+                <Lock className="w-4 h-4 text-[#85858D] absolute left-3.5 top-1/2 -translate-y-1/2" />
+                <input
+                  name="password"
+                  type={showPassword ? "text" : "password"}
+                  required
+                  placeholder="At least 8 characters"
+                  value={formData.password}
+                  onChange={handleChange}
+                  className="w-full h-12 bg-[#0F0F10] border border-[#2A2A30] hover:border-[#45454D] outline-none focus:outline-none focus:ring-0 focus:border-[#FFE600] rounded-lg pl-10 pr-10 text-sm text-[#EDEDEF] placeholder-[#707078] transition-colors"
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute right-3.5 top-1/2 -translate-y-1/2 text-[#85858D] hover:text-[#FFE600] cursor-pointer transition-colors"
+                >
+                  {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                </button>
               </div>
 
-              <button
-                type="submit"
-                disabled={loading || !!successData}
-                className="w-full mt-2 bg-[#1E2024] hover:bg-stone-900 text-white rounded-full py-3 px-5 text-xs font-bold shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-2 cursor-pointer disabled:opacity-60"
-              >
-                {loading ? (
-                  <>
-                    <div className="w-3.5 h-3.5 border-2 border-white/40 border-t-white rounded-full animate-spin" />
-                    <span>Creating workspace...</span>
-                  </>
-                ) : successData ? (
-                  <>
-                    <Check className="w-4 h-4 text-[#FBBF24]" />
-                    <span>Workspace Ready</span>
-                  </>
-                ) : (
-                  <>
-                    <span>Create Workspace & Account</span>
-                    <ArrowRight className="w-3.5 h-3.5" />
-                  </>
-                )}
-              </button>
-            </form>
-
-            <div className="pt-3 border-t border-[#EBE3D3] text-center text-xs font-medium text-stone-500">
-              Already have an account?{" "}
-              <Link
-                href="/login"
-                className="font-bold text-[#1A1C1E] hover:underline underline-offset-2"
-              >
-                Sign in here
-              </Link>
+              {formData.password && (
+                <div className="pt-1 flex gap-1.5 h-1">
+                  <div
+                    className={`flex-1 rounded-full ${
+                      passwordStrength >= 1 ? "bg-[#FFE600]" : "bg-[#24242A]"
+                    }`}
+                  />
+                  <div
+                    className={`flex-1 rounded-full ${
+                      passwordStrength >= 2 ? "bg-[#FFE600]" : "bg-[#24242A]"
+                    }`}
+                  />
+                  <div
+                    className={`flex-1 rounded-full ${
+                      passwordStrength >= 3 ? "bg-[#7B3DFF]" : "bg-[#24242A]"
+                    }`}
+                  />
+                  <div
+                    className={`flex-1 rounded-full ${
+                      passwordStrength >= 4 ? "bg-[#22C55E]" : "bg-[#24242A]"
+                    }`}
+                  />
+                </div>
+              )}
             </div>
+
+            <div className="pt-1">
+              <label className="flex items-start gap-2.5 cursor-pointer select-none">
+                <input
+                  type="checkbox"
+                  checked={agreedToTerms}
+                  onChange={(e) => setAgreedToTerms(e.target.checked)}
+                  className="mt-0.5 w-4 h-4 rounded border-[#2A2A30] bg-[#0F0F10] text-[#FFE600] focus:ring-[#FFE600] accent-[#FFE600]"
+                />
+                <span className="text-xs text-[#85858D] leading-normal">
+                  I agree to the{" "}
+                  <span className="font-medium text-[#D1D1D6] underline underline-offset-2 hover:text-[#FFE600] cursor-pointer transition-colors">
+                    Terms of Service
+                  </span>{" "}
+                  and{" "}
+                  <span className="font-medium text-[#D1D1D6] underline underline-offset-2 hover:text-[#FFE600] cursor-pointer transition-colors">
+                    Privacy Policy
+                  </span>
+                  .
+                </span>
+              </label>
+            </div>
+
+            {/* CLYRA Design System Outline / Disabled Button */}
+            <button
+              type="submit"
+              disabled={loading || !!successData}
+              className="w-full mt-2 h-12 bg-transparent hover:bg-[#FFE600]/8 active:bg-[#FFE600]/14 border border-[#FFE600]/55 hover:border-[#FFE600] text-[#FFE600] rounded-lg px-6 text-sm font-semibold transition-all flex items-center justify-center gap-2 cursor-pointer disabled:border-[#303035] disabled:text-[#55555C] disabled:bg-transparent disabled:cursor-not-allowed"
+            >
+              {loading ? (
+                <>
+                  <div className="w-4 h-4 border-2 border-[#FFE600]/40 border-t-[#FFE600] rounded-full animate-spin" />
+                  <span>Creating workspace...</span>
+                </>
+              ) : successData ? (
+                <>
+                  <Check className="w-4 h-4 text-[#22C55E]" />
+                  <span>Workspace Ready</span>
+                </>
+              ) : (
+                <>
+                  <span>Create Workspace</span>
+                  <ArrowRight className="w-4 h-4" />
+                </>
+              )}
+            </button>
+          </form>
+
+          <div className="pt-4 border-t border-[#2A2A30] text-center text-xs font-medium text-[#85858D]">
+            Already have a workspace?{" "}
+            <Link
+              href="/login"
+              className="font-semibold text-[#FFE600] hover:underline underline-offset-2 transition-colors"
+            >
+              Sign in here
+            </Link>
           </div>
         </div>
-
-      </div>
+      </main>
     </div>
   );
 }

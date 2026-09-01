@@ -1,0 +1,119 @@
+:root {
+  /* =========================
+     CLYRA BRAND
+     ========================= */
+
+  --clyra-yellow: #FFE600;
+  --clyra-yellow-hover: #FFF033;
+  --clyra-yellow-pressed: #C9B800;
+
+  --clyra-purple: #7B3DFF;
+  --clyra-purple-hover: #914FFF;
+  --clyra-purple-pressed: #5D22D6;
+
+
+  /* =========================
+     SEMANTIC COLORS
+     ========================= */
+
+  --clyra-blue: #4D7BFF;
+  --clyra-success: #22C55E;
+  --clyra-error: #FF3B30;
+
+
+  /* =========================
+     BACKGROUNDS
+     ========================= */
+
+  --clyra-bg: #0F0F10;
+  --clyra-bg-deep: #09090A;
+
+  --clyra-surface: #151517;
+  --clyra-surface-hover: #1E1E22;
+  --clyra-surface-elevated: #24242A;
+
+
+  /* =========================
+     TEXT
+     ========================= */
+
+  --clyra-text-primary: #FFFFFF;
+  --clyra-text-secondary: #B8B8BE;
+  --clyra-text-muted: #85858D;
+  --clyra-text-placeholder: #707078;
+  --clyra-text-disabled: #55555C;
+
+
+  /* =========================
+     BORDERS
+     ========================= */
+
+  --clyra-border: #2A2A30;
+  --clyra-border-subtle: rgba(255, 255, 255, 0.08);
+  --clyra-border-strong: rgba(255, 255, 255, 0.15);
+
+  --clyra-border-yellow: rgba(255, 230, 0, 0.55);
+  --clyra-border-purple: rgba(123, 61, 255, 0.55);
+
+
+  /* =========================
+     GLOWS
+     ========================= */
+
+  --clyra-glow-yellow:
+    0 0 20px rgba(255, 230, 0, 0.25);
+
+  --clyra-glow-purple:
+    0 0 20px rgba(123, 61, 255, 0.25);
+
+  --clyra-glow-yellow-strong:
+    0 0 30px rgba(255, 230, 0, 0.35);
+
+
+  /* =========================
+     RADIUS
+     ========================= */
+
+  --radius-sm: 6px;
+  --radius-button: 8px;
+  --radius-input: 8px;
+  --radius-card: 12px;
+  --radius-panel: 16px;
+  --radius-pill: 999px;
+
+
+  /* =========================
+     SPACING
+     ========================= */
+
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 40px;
+  --space-8: 48px;
+  --space-9: 64px;
+  --space-10: 80px;
+
+
+  /* =========================
+     TYPOGRAPHY
+     ========================= */
+
+  --font-family:
+    "Inter",
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+
+  --text-h1: 32px;
+  --text-h2: 24px;
+  --text-h3: 20px;
+  --text-body-lg: 16px;
+  --text-body: 14px;
+  --text-caption: 12px;
+}

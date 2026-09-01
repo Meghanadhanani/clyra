@@ -17,6 +17,8 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "@dotlottie/player-component": "^2.7.12",
+    "@fontsource-variable/google-sans-flex": "^5.3.1",
     "@hookform/resolvers": "^5.9.1",
     "axios": "^1.20.0",
     "lucide-react": "^1.34.0",

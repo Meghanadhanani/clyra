@@ -1,12 +1,5 @@
-import { Plus_Jakarta_Sans } from "next/font/google";
+import "@fontsource-variable/google-sans-flex";
 import "./globals.css";
-
-const plusJakartaSans = Plus_Jakarta_Sans({
-  subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700", "800"],
-  variable: "--font-sans",
-  display: "swap",
-});
 
 export const metadata = {
   title: "CLYRA | AI Customer Support & Automation",
@@ -15,8 +8,8 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className={plusJakartaSans.className}>
-      <body>{children}</body>
+    <html lang="en">
+      <body className="antialiased">{children}</body>
     </html>
   );
 }
