@@ -1,7 +1,8 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
+import Script from "next/script";
 import {
   Activity,
   ArrowRight,
@@ -20,6 +21,30 @@ import {
 
 export default function LandingPage() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [featuresVisible, setFeaturesVisible] = useState(false);
+  const featuresRef = useRef(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setFeaturesVisible(true);
+          }
+        });
+      },
+      {
+        threshold: 0.1,
+        rootMargin: "0px 0px -50px 0px",
+      }
+    );
+
+    if (featuresRef.current) {
+      observer.observe(featuresRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, []);
 
   return (
     <div className="relative min-h-screen w-full bg-[#070709] text-white flex flex-col overflow-x-hidden font-sans select-none">
@@ -134,7 +159,7 @@ export default function LandingPage() {
         <div className="absolute bottom-0 inset-x-0 h-32 bg-gradient-to-t from-[#070709] via-[#070709]/80 to-transparent pointer-events-none z-0" />
 
         {/* Center Logo Trigger */}
-        <header className="relative z-30 w-full max-w-7xl mx-auto px-6 lg:px-12 pt-4 pb-1 sm:py-6 flex items-center justify-center">
+        <header className="relative z-30 w-full max-w-7xl mx-auto px-6 lg:px-12 pt-4 pb-1 sm:py-6 flex items-center justify-center clyra-reveal-header">
           <button
             onClick={() => setMenuOpen(true)}
             className={`flex items-center gap-3.5 px-6 py-3 rounded-lg bg-[#0F0F10]/95 hover:bg-[#151517] border border-[#2A2A30] hover:border-[#FFE600]/80 backdrop-blur-xl shadow-[0_10px_35px_rgba(0,0,0,0.9),0_0_20px_rgba(255,230,0,0.15)] group transition-all duration-300 ease-out cursor-pointer hover:scale-102 active:scale-98 ${menuOpen ? "opacity-0 scale-90 pointer-events-none" : "opacity-100 scale-100 pointer-events-auto"
@@ -155,7 +180,7 @@ export default function LandingPage() {
         {/* Hero Content (Starts directly below navbar on small screens) */}
         <main className="relative z-10 w-full max-w-4xl mx-auto px-6 pt-25 sm:pt-4 pb-8 sm:pb-12 flex flex-col items-center justify-center text-center my-0 sm:my-auto">
           {/* Hero Title with Deep Cinematic Text Shadow */}
-          <h1 className="text-3xl sm:text-5xl lg:text-6xl font-extrabold text-white tracking-tight leading-[1.15] drop-shadow-[0_10px_30px_rgba(0,0,0,0.95)]">
+          <h1 className="text-3xl sm:text-5xl lg:text-6xl font-extrabold text-white tracking-tight leading-[1.15] drop-shadow-[0_10px_30px_rgba(0,0,0,0.95)] clyra-reveal-title">
             Customer Support That Resolves Itself in{" "}
             <span className="text-[#FFE600] drop-shadow-[0_0_35px_rgba(255,230,0,0.45)]">
               Real-Time
@@ -163,16 +188,16 @@ export default function LandingPage() {
           </h1>
 
           {/* Hero Subtitle */}
-          <p className="mt-5 max-w-2xl text-sm sm:text-base text-zinc-300 leading-relaxed font-normal drop-shadow-[0_4px_16px_rgba(0,0,0,0.9)]">
+          <p className="mt-5 max-w-2xl text-sm sm:text-base text-zinc-300 leading-relaxed font-normal drop-shadow-[0_4px_16px_rgba(0,0,0,0.9)] clyra-reveal-subtitle">
             Meet CLYRA — the autonomous AI engine that handles inquiries, tracks orders, and manages support workflows with sub-2s response times and 80%+ instant resolution.
           </p>
 
           {/* Hero CTA Action Group: Side by side on mobile and desktop */}
-          <div className="mt-8 flex flex-row items-center justify-center gap-3 w-full sm:w-auto max-w-sm sm:max-w-none mx-auto">
+          <div className="mt-8 flex flex-row items-center justify-center gap-3 w-full sm:w-auto max-w-sm sm:max-w-none mx-auto clyra-reveal-cta">
             {/* Primary #FFE600 Button */}
             <Link
               href="/signup"
-              className="flex-1 sm:flex-initial px-5 sm:px-7 py-3 rounded-lg bg-[#FFE600] hover:bg-[#ffe81a] active:bg-[#FFE600]/80 text-black text-xs sm:text-sm font-bold transition-all shadow-[0_4px_20px_rgba(255,230,0,0.35)] hover:shadow-[0_0_25px_#FFE600] hover:scale-102 active:scale-98 flex items-center justify-center gap-1.5 sm:gap-2 cursor-pointer text-center"
+              className="clyra-interactive-btn flex-1 sm:flex-initial px-5 sm:px-7 py-3 rounded-lg bg-[#FFE600] hover:bg-[#ffe81a] active:bg-[#FFE600]/80 text-black text-xs sm:text-sm font-bold shadow-[0_4px_20px_rgba(255,230,0,0.35)] hover:shadow-[0_0_25px_#FFE600] flex items-center justify-center gap-1.5 sm:gap-2 cursor-pointer text-center"
             >
               <span>Get Started</span>
               <ArrowRight className="w-3.5 h-3.5 sm:w-4 sm:h-4 shrink-0" />
@@ -181,26 +206,26 @@ export default function LandingPage() {
             {/* Design System Outline Button */}
             <Link
               href="/login"
-              className="flex-1 sm:flex-initial px-5 sm:px-7 py-3 rounded-lg bg-transparent hover:bg-[#FFE600]/10 border border-[#FFE600] text-[#FFE600] text-xs sm:text-sm font-semibold transition-all shadow-[0_0_15px_rgba(255,230,0,0.15)] hover:shadow-[0_0_20px_rgba(255,230,0,0.3)] flex items-center justify-center gap-1.5 sm:gap-2 hover:scale-102 active:scale-98 text-center"
+              className="clyra-interactive-btn flex-1 sm:flex-initial px-5 sm:px-7 py-3 rounded-lg bg-transparent hover:bg-[#FFE600]/10 border border-[#FFE600] text-[#FFE600] text-xs sm:text-sm font-semibold shadow-[0_0_15px_rgba(255,230,0,0.15)] hover:shadow-[0_0_20px_rgba(255,230,0,0.3)] flex items-center justify-center gap-1.5 sm:gap-2 text-center"
             >
               <span>Launch Workspace</span>
               <ArrowUpRight className="w-3.5 h-3.5 sm:w-4 sm:h-4 shrink-0" />
             </Link>
           </div>
 
-          {/* Micro-Metrics Floating Glass Card with Ambient Shadow */}
-          <div className="mt-10 max-w-xl w-full bg-[#0F0F10]/90 backdrop-blur-xl border border-[#1E1E22] rounded-2xl p-5 shadow-[0_20px_50px_rgba(0,0,0,0.9),0_0_25px_rgba(255,230,0,0.08)]">
+          {/* Micro-Metrics Floating Glass Card with Butter-Smooth Hover Physics */}
+          <div className="clyra-interactive-card mt-10 max-w-xl w-full bg-[#0F0F10]/90 backdrop-blur-xl border border-[#1E1E22] rounded-2xl p-5 shadow-[0_20px_50px_rgba(0,0,0,0.9),0_0_25px_rgba(255,230,0,0.08)] cursor-default clyra-reveal-metrics group">
             <div className="grid grid-cols-3 gap-3 sm:gap-6">
               <div className="space-y-0.5">
-                <p className="text-xl sm:text-2xl font-extrabold text-white drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]">1.8s</p>
+                <p className="text-xl sm:text-2xl font-extrabold text-white drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)] group-hover:text-[#EDEDEF] transition-colors duration-300">1.8s</p>
                 <p className="text-[10px] sm:text-xs text-[#A1A1AA] font-medium">Avg Response Speed</p>
               </div>
               <div className="space-y-0.5 border-x border-[#1E1E22] px-2 sm:px-4">
-                <p className="text-xl sm:text-2xl font-extrabold text-[#FFE600] drop-shadow-[0_0_15px_rgba(255,230,0,0.35)]">80%+</p>
+                <p className="text-xl sm:text-2xl font-extrabold text-[#FFE600] drop-shadow-[0_0_15px_rgba(255,230,0,0.35)] group-hover:scale-105 transition-transform duration-300">80%+</p>
                 <p className="text-[10px] sm:text-xs text-[#A1A1AA] font-medium">Autonomous Fix</p>
               </div>
               <div className="space-y-0.5">
-                <p className="text-xl sm:text-2xl font-extrabold text-white drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]">99.2%</p>
+                <p className="text-xl sm:text-2xl font-extrabold text-white drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)] group-hover:text-[#22C55E] transition-colors duration-300">99.2%</p>
                 <p className="text-[10px] sm:text-xs text-[#A1A1AA] font-medium">Satisfaction Rate</p>
               </div>
             </div>
@@ -209,7 +234,7 @@ export default function LandingPage() {
       </div>
 
       {/* ================= 2ND SCREEN: BENTO GRID WITH LIQUID GLASS EFFECT (bgLandingImg2.png) ================= */}
-      <section id="features" className="relative z-10 w-full min-h-screen px-6 sm:px-12 lg:px-16 flex flex-col items-center justify-center overflow-hidden">
+      <section id="features" ref={featuresRef} className="relative z-10 w-full min-h-screen py-16 px-6 sm:px-12 lg:px-16 flex flex-col items-center justify-center overflow-hidden">
         {/* Full Background Graphic (bgLandingImg2.png) */}
         <div
           className="absolute inset-0 bg-cover bg-center bg-no-repeat pointer-events-none z-0 opacity-85 transition-opacity duration-700"
@@ -225,8 +250,7 @@ export default function LandingPage() {
         {/* Section Container */}
         <div className="relative z-10 w-full max-w-6xl mx-auto space-y-12">
           {/* Section Header */}
-          <div className="text-center space-y-3.5 max-w-2xl mx-auto">
-
+          <div className={`text-center space-y-3.5 max-w-2xl mx-auto clyra-scroll-item ${featuresVisible ? "is-visible" : ""}`}>
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-[#EDEDEF] tracking-tight leading-tight drop-shadow-[0_4px_20px_rgba(0,0,0,0.9)]">
               Next-Gen Support <span className="text-[#FFE600] drop-shadow-[0_0_25px_rgba(255,230,0,0.35)]">Intelligence</span>
             </h2>
@@ -235,119 +259,129 @@ export default function LandingPage() {
             </p>
           </div>
 
-          {/* Liquid Glass Bento Grid */}
+          {/* Liquid Glass Bento Grid with Butter-Smooth Hover Physics */}
           <div className="grid grid-cols-1 md:grid-cols-12 gap-5">
             {/* Bento Card 1 (Span 7) - Autonomous AI Agent Engine */}
-            <div className="md:col-span-7 bg-[#0F0F10]/75 hover:bg-[#151517]/85 backdrop-blur-2xl border border-white/10 hover:border-[#FFE600]/40 rounded-2xl p-6 sm:p-7 shadow-[0_20px_50px_rgba(0,0,0,0.7),inset_0_1px_1px_rgba(255,255,255,0.12)] transition-all duration-300 group flex flex-col justify-between relative overflow-hidden">
-              {/* Liquid ambient glow inside card */}
-              <div className="absolute top-0 right-0 w-64 h-64 bg-[#7B3DFF]/15 rounded-full blur-3xl pointer-events-none group-hover:bg-[#7B3DFF]/25 transition-all" />
+            <div
+              className={`clyra-interactive-card md:col-span-7 bg-[#0F0F10]/80 hover:bg-[#151517]/95 backdrop-blur-2xl border border-white/10 rounded-2xl p-6 sm:p-7 shadow-[0_20px_50px_rgba(0,0,0,0.7),inset_0_1px_1px_rgba(255,255,255,0.12)] group flex flex-col justify-between relative overflow-hidden cursor-pointer clyra-scroll-item ${featuresVisible ? "is-visible" : ""}`}
+              style={{ transitionDelay: "100ms" }}
+            >
+              {/* Liquid ambient glow inside card that smoothly expands on hover */}
+              <div className="clyra-glow-orb absolute top-0 right-0 w-64 h-64 bg-[#7B3DFF]/15 rounded-full blur-3xl pointer-events-none group-hover:bg-[#7B3DFF]/30 group-hover:scale-140" />
 
               <div className="space-y-4 relative z-10">
                 <div className="flex items-center justify-between">
-                  <div className="w-10 h-10 rounded-xl bg-[#1E1E22] border border-[#7B3DFF]/40 flex items-center justify-center text-[#7B3DFF] shadow-[0_0_15px_rgba(123,61,255,0.25)]">
+                  <div className="w-10 h-10 rounded-xl bg-[#1E1E22] border border-[#7B3DFF]/40 group-hover:border-[#7B3DFF] group-hover:scale-110 flex items-center justify-center text-[#7B3DFF] shadow-[0_0_15px_rgba(123,61,255,0.25)] group-hover:shadow-[0_0_22px_rgba(123,61,255,0.45)] transition-all duration-400 ease-out">
                     <Bot className="w-5 h-5" />
                   </div>
-                  <span className="text-[10px] font-bold uppercase tracking-wider text-[#22C55E] bg-[rgba(34,197,94,0.08)] border border-[rgba(34,197,94,0.4)] px-2.5 py-0.5 rounded-full flex items-center gap-1.5">
-                    <span className="w-1.5 h-1.5 rounded-full bg-[#22C55E] animate-pulse" />
+                  <span className="text-[10px] font-bold uppercase tracking-wider text-[#22C55E] bg-[rgba(34,197,94,0.08)] border border-[rgba(34,197,94,0.4)] px-2.5 py-0.5 rounded-lg group-hover:border-[#22C55E]/80 transition-colors duration-300">
                     Sub-2s Latency
                   </span>
                 </div>
                 <div>
-                  <h3 className="text-lg sm:text-xl font-bold text-[#EDEDEF] group-hover:text-white transition-colors">
+                  <h3 className="text-lg sm:text-xl font-bold text-[#EDEDEF] group-hover:text-white transition-colors duration-300">
                     Autonomous Multi-Modal Resolver
                   </h3>
-                  <p className="text-xs sm:text-sm text-[#9E9EA8] mt-1.5 leading-relaxed">
+                  <p className="text-xs sm:text-sm text-[#9E9EA8] group-hover:text-[#B8B8BE] mt-1.5 leading-relaxed transition-colors duration-300">
                     Understands nuance, sentiment, and user intent across chats, emails, and tickets to execute instant end-to-end resolutions without human routing.
                   </p>
                 </div>
               </div>
 
               {/* Mini Glass Ticket Mock */}
-              <div className="mt-6 pt-4 border-t border-white/5 relative z-10 flex items-center justify-between bg-[#070709]/60 rounded-xl p-3 border border-white/5">
+              <div className="mt-6 pt-4 border-t border-white/5 relative z-10 flex items-center justify-between bg-[#070709]/60 group-hover:bg-[#0F0F10] group-hover:border-white/10 rounded-xl p-3 border border-white/5 transition-all duration-400 ease-out">
                 <div className="flex items-center gap-2.5">
-                  <div className="w-2 h-2 rounded-full bg-[#FFE600] shadow-[0_0_6px_#FFE600]" />
-                  <span className="text-xs font-mono text-[#D1D1D6]">#TK-8942 · &quot;Where is my shipment?&quot;</span>
+                  <span className="text-xs font-mono text-[#D1D1D6] group-hover:text-white transition-colors duration-300">#TK-8942 · &quot;Where is my shipment?&quot;</span>
                 </div>
                 <span className="text-[10px] font-semibold text-[#22C55E]">Resolved in 1.4s</span>
               </div>
             </div>
 
             {/* Bento Card 2 (Span 5) - Real-Time Order & Logistics Sync */}
-            <div className="md:col-span-5 bg-[#0F0F10]/75 hover:bg-[#151517]/85 backdrop-blur-2xl border border-white/10 hover:border-[#FFE600]/40 rounded-2xl p-6 sm:p-7 shadow-[0_20px_50px_rgba(0,0,0,0.7),inset_0_1px_1px_rgba(255,255,255,0.12)] transition-all duration-300 group flex flex-col justify-between relative overflow-hidden">
-              <div className="absolute top-0 right-0 w-48 h-48 bg-[#FFE600]/10 rounded-full blur-3xl pointer-events-none group-hover:bg-[#FFE600]/20 transition-all" />
+            <div
+              className={`clyra-interactive-card md:col-span-5 bg-[#0F0F10]/80 hover:bg-[#151517]/95 backdrop-blur-2xl border border-white/10 rounded-2xl p-6 sm:p-7 shadow-[0_20px_50px_rgba(0,0,0,0.7),inset_0_1px_1px_rgba(255,255,255,0.12)] group flex flex-col justify-between relative overflow-hidden cursor-pointer clyra-scroll-item ${featuresVisible ? "is-visible" : ""}`}
+              style={{ transitionDelay: "250ms" }}
+            >
+              <div className="clyra-glow-orb absolute top-0 right-0 w-48 h-48 bg-[#FFE600]/10 rounded-full blur-3xl pointer-events-none group-hover:bg-[#FFE600]/25 group-hover:scale-140" />
 
               <div className="space-y-4 relative z-10">
                 <div className="flex items-center justify-between">
-                  <div className="w-10 h-10 rounded-xl bg-[#1E1E22] border border-[#FFE600]/40 flex items-center justify-center text-[#FFE600] shadow-[0_0_15px_rgba(255,230,0,0.2)]">
+                  <div className="w-10 h-10 rounded-xl bg-[#1E1E22] border border-[#FFE600]/40 group-hover:border-[#FFE600] group-hover:scale-110 flex items-center justify-center text-[#FFE600] shadow-[0_0_15px_rgba(255,230,0,0.2)] group-hover:shadow-[0_0_22px_rgba(255,230,0,0.45)] transition-all duration-400 ease-out">
                     <ShoppingBag className="w-5 h-5" />
                   </div>
-                  <span className="text-[10px] font-bold uppercase tracking-wider text-[#4D7BFF] bg-[rgba(77,123,255,0.08)] border border-[rgba(77,123,255,0.4)] px-2.5 py-0.5 rounded-full">
+                  <span className="text-[10px] font-bold uppercase tracking-wider text-[#4D7BFF] bg-[rgba(77,123,255,0.08)] border border-[rgba(77,123,255,0.4)] px-2.5 py-0.5 rounded-lg group-hover:border-[#4D7BFF]/80 transition-colors duration-300">
                     Shopify Live
                   </span>
                 </div>
                 <div>
-                  <h3 className="text-lg sm:text-xl font-bold text-[#EDEDEF] group-hover:text-white transition-colors">
+                  <h3 className="text-lg sm:text-xl font-bold text-[#EDEDEF] group-hover:text-white transition-colors duration-300">
                     Direct Storefront & ERP Sync
                   </h3>
-                  <p className="text-xs sm:text-sm text-[#9E9EA8] mt-1.5 leading-relaxed">
+                  <p className="text-xs sm:text-sm text-[#9E9EA8] group-hover:text-[#B8B8BE] mt-1.5 leading-relaxed transition-colors duration-300">
                     Live inventory, courier status, address modifications, and automated return authorizations directly synchronized with your ecommerce stack.
                   </p>
                 </div>
               </div>
 
-              <div className="mt-6 pt-4 border-t border-white/5 relative z-10 flex items-center justify-between text-xs text-[#9E9EA8]">
+              <div className="mt-6 pt-4 border-t border-white/5 relative z-10 flex items-center justify-between text-xs text-[#9E9EA8] group-hover:text-[#B8B8BE] transition-colors duration-300">
                 <span>Order #40921 Tracking</span>
-                <span className="font-semibold text-[#FFE600]">In Transit · Out for Delivery</span>
+                <span className="font-semibold text-[#FFE600] group-hover:scale-102 transition-transform duration-300">In Transit · Out for Delivery</span>
               </div>
             </div>
 
             {/* Bento Card 3 (Span 5) - Neural Guardrails */}
-            <div className="md:col-span-5 bg-[#0F0F10]/75 hover:bg-[#151517]/85 backdrop-blur-2xl border border-white/10 hover:border-[#FFE600]/40 rounded-2xl p-6 sm:p-7 shadow-[0_20px_50px_rgba(0,0,0,0.7),inset_0_1px_1px_rgba(255,255,255,0.12)] transition-all duration-300 group flex flex-col justify-between relative overflow-hidden">
-              <div className="absolute top-0 right-0 w-48 h-48 bg-[#4D7BFF]/10 rounded-full blur-3xl pointer-events-none group-hover:bg-[#4D7BFF]/20 transition-all" />
+            <div
+              className={`clyra-interactive-card md:col-span-5 bg-[#0F0F10]/80 hover:bg-[#151517]/95 backdrop-blur-2xl border border-white/10 rounded-2xl p-6 sm:p-7 shadow-[0_20px_50px_rgba(0,0,0,0.7),inset_0_1px_1px_rgba(255,255,255,0.12)] group flex flex-col justify-between relative overflow-hidden cursor-pointer clyra-scroll-item ${featuresVisible ? "is-visible" : ""}`}
+              style={{ transitionDelay: "400ms" }}
+            >
+              <div className="clyra-glow-orb absolute top-0 right-0 w-48 h-48 bg-[#4D7BFF]/10 rounded-full blur-3xl pointer-events-none group-hover:bg-[#4D7BFF]/25 group-hover:scale-140" />
 
               <div className="space-y-4 relative z-10">
                 <div className="flex items-center justify-between">
-                  <div className="w-10 h-10 rounded-xl bg-[#1E1E22] border border-[#4D7BFF]/40 flex items-center justify-center text-[#4D7BFF] shadow-[0_0_15px_rgba(77,123,255,0.2)]">
+                  <div className="w-10 h-10 rounded-xl bg-[#1E1E22] border border-[#4D7BFF]/40 group-hover:border-[#4D7BFF] group-hover:scale-110 flex items-center justify-center text-[#4D7BFF] shadow-[0_0_15px_rgba(77,123,255,0.2)] group-hover:shadow-[0_0_22px_rgba(77,123,255,0.45)] transition-all duration-400 ease-out">
                     <ShieldCheck className="w-5 h-5" />
                   </div>
-                  <span className="text-[10px] font-bold uppercase tracking-wider text-[#FFE600] bg-[rgba(255,230,0,0.08)] border border-[rgba(255,230,0,0.4)] px-2.5 py-0.5 rounded-full">
+                  <span className="text-[10px] font-bold uppercase tracking-wider text-[#FFE600] bg-[rgba(255,230,0,0.08)] border border-[rgba(255,230,0,0.4)] px-2.5 py-0.5 rounded-lg group-hover:border-[#FFE600]/80 transition-colors duration-300">
                     Deterministic
                   </span>
                 </div>
                 <div>
-                  <h3 className="text-lg sm:text-xl font-bold text-[#EDEDEF] group-hover:text-white transition-colors">
+                  <h3 className="text-lg sm:text-xl font-bold text-[#EDEDEF] group-hover:text-white transition-colors duration-300">
                     Zero-Hallucination Guardrails
                   </h3>
-                  <p className="text-xs sm:text-sm text-[#9E9EA8] mt-1.5 leading-relaxed">
+                  <p className="text-xs sm:text-sm text-[#9E9EA8] group-hover:text-[#B8B8BE] mt-1.5 leading-relaxed transition-colors duration-300">
                     Custom rule definitions and threshold triggers prevent rogue responses, enforcing strict corporate policy on refunds and guarantees.
                   </p>
                 </div>
               </div>
 
               <div className="mt-6 pt-4 border-t border-white/5 relative z-10 flex items-center gap-2 text-xs text-[#22C55E]">
-                <CheckCircle2 className="w-4 h-4" />
+                <CheckCircle2 className="w-4 h-4 group-hover:scale-110 transition-transform duration-300" />
                 <span>100% Policy Compliant</span>
               </div>
             </div>
 
             {/* Bento Card 4 (Span 7) - Real-Time Telemetry & Insights */}
-            <div className="md:col-span-7 bg-[#0F0F10]/75 hover:bg-[#151517]/85 backdrop-blur-2xl border border-white/10 hover:border-[#FFE600]/40 rounded-2xl p-6 sm:p-7 shadow-[0_20px_50px_rgba(0,0,0,0.7),inset_0_1px_1px_rgba(255,255,255,0.12)] transition-all duration-300 group flex flex-col justify-between relative overflow-hidden">
-              <div className="absolute top-0 right-0 w-64 h-64 bg-[#FFE600]/15 rounded-full blur-3xl pointer-events-none group-hover:bg-[#FFE600]/25 transition-all" />
+            <div
+              className={`clyra-interactive-card md:col-span-7 bg-[#0F0F10]/80 hover:bg-[#151517]/95 backdrop-blur-2xl border border-white/10 rounded-2xl p-6 sm:p-7 shadow-[0_20px_50px_rgba(0,0,0,0.7),inset_0_1px_1px_rgba(255,255,255,0.12)] group flex flex-col justify-between relative overflow-hidden cursor-pointer clyra-scroll-item ${featuresVisible ? "is-visible" : ""}`}
+              style={{ transitionDelay: "550ms" }}
+            >
+              <div className="clyra-glow-orb absolute top-0 right-0 w-64 h-64 bg-[#FFE600]/15 rounded-full blur-3xl pointer-events-none group-hover:bg-[#FFE600]/30 group-hover:scale-140" />
 
               <div className="space-y-4 relative z-10">
                 <div className="flex items-center justify-between">
-                  <div className="w-10 h-10 rounded-xl bg-[#1E1E22] border border-[#FFE600]/40 flex items-center justify-center text-[#FFE600] shadow-[0_0_15px_rgba(255,230,0,0.2)]">
+                  <div className="w-10 h-10 rounded-xl bg-[#1E1E22] border border-[#FFE600]/40 group-hover:border-[#FFE600] group-hover:scale-110 flex items-center justify-center text-[#FFE600] shadow-[0_0_15px_rgba(255,230,0,0.2)] group-hover:shadow-[0_0_22px_rgba(255,230,0,0.45)] transition-all duration-400 ease-out">
                     <TrendingUp className="w-5 h-5" />
                   </div>
-                  <span className="text-[10px] font-bold uppercase tracking-wider text-[#7B3DFF] bg-[rgba(123,61,255,0.08)] border border-[rgba(123,61,255,0.4)] px-2.5 py-0.5 rounded-full">
+                  <span className="text-[10px] font-bold uppercase tracking-wider text-[#7B3DFF] bg-[rgba(123,61,255,0.08)] border border-[rgba(123,61,255,0.4)] px-2.5 py-0.5 rounded-lg group-hover:border-[#7B3DFF]/80 transition-colors duration-300">
                     Live Analytics
                   </span>
                 </div>
                 <div>
-                  <h3 className="text-lg sm:text-xl font-bold text-[#EDEDEF] group-hover:text-white transition-colors">
+                  <h3 className="text-lg sm:text-xl font-bold text-[#EDEDEF] group-hover:text-white transition-colors duration-300">
                     Adaptive Resolution Telemetry
                   </h3>
-                  <p className="text-xs sm:text-sm text-[#9E9EA8] mt-1.5 leading-relaxed">
+                  <p className="text-xs sm:text-sm text-[#9E9EA8] group-hover:text-[#B8B8BE] mt-1.5 leading-relaxed transition-colors duration-300">
                     Gain deep visibility into resolution speed, common customer bottlenecks, autonomous escalation paths, and user satisfaction metrics in real time.
                   </p>
                 </div>
@@ -355,15 +389,15 @@ export default function LandingPage() {
 
               {/* Progress metric breakdown */}
               <div className="mt-6 pt-4 border-t border-white/5 relative z-10 grid grid-cols-3 gap-3 text-center">
-                <div className="bg-[#070709]/60 p-2.5 rounded-lg border border-white/5">
+                <div className="bg-[#070709]/60 group-hover:bg-[#0F0F10] group-hover:border-white/10 p-2.5 rounded-lg border border-white/5 transition-all duration-400 ease-out">
                   <p className="text-base font-bold text-white">84.2%</p>
                   <p className="text-[10px] text-[#9E9EA8]">Auto-Solved</p>
                 </div>
-                <div className="bg-[#070709]/60 p-2.5 rounded-lg border border-white/5">
+                <div className="bg-[#070709]/60 group-hover:bg-[#0F0F10] group-hover:border-white/10 p-2.5 rounded-lg border border-white/5 transition-all duration-400 ease-out">
                   <p className="text-base font-bold text-[#FFE600]">1.8s</p>
                   <p className="text-[10px] text-[#9E9EA8]">Avg Speed</p>
                 </div>
-                <div className="bg-[#070709]/60 p-2.5 rounded-lg border border-white/5">
+                <div className="bg-[#070709]/60 group-hover:bg-[#0F0F10] group-hover:border-white/10 p-2.5 rounded-lg border border-white/5 transition-all duration-400 ease-out">
                   <p className="text-base font-bold text-[#22C55E]">99.2%</p>
                   <p className="text-[10px] text-[#9E9EA8]">CSAT Rate</p>
                 </div>
@@ -372,6 +406,8 @@ export default function LandingPage() {
           </div>
         </div>
       </section>
+
+     
 
       {/* ================= FOOTER ================= */}
       <footer className="relative z-10 w-full bg-[#09090A]/90 backdrop-blur-xl border-t border-[#1E1E22] py-8 px-6 lg:px-12">

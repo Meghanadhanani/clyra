@@ -1457,3 +1457,124 @@ button:focus-visible {
     -webkit-tap-highlight-color: transparent;
   }
 }
+
+/* =========================================================
+   CINEMATIC REVEAL ANIMATIONS FOR LANDING PAGE
+   ========================================================= */
+
+@keyframes clyraFadeUp {
+  0% {
+    opacity: 0;
+    transform: translateY(30px) scale(0.96);
+    filter: blur(4px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0px);
+  }
+}
+
+@keyframes clyraFadeDown {
+  0% {
+    opacity: 0;
+    transform: translateY(-24px) scale(0.96);
+    filter: blur(4px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0px);
+  }
+}
+
+.clyra-reveal-header {
+  animation: clyraFadeDown 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.05s both;
+}
+
+.clyra-reveal-title {
+  animation: clyraFadeUp 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.18s both;
+}
+
+.clyra-reveal-subtitle {
+  animation: clyraFadeUp 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.38s both;
+}
+
+.clyra-reveal-cta {
+  animation: clyraFadeUp 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.58s both;
+}
+
+.clyra-reveal-metrics {
+  animation: clyraFadeUp 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.78s both;
+}
+
+/* Scroll reveal card classes */
+.clyra-scroll-item {
+  opacity: 0;
+  transform: translateY(45px) scale(0.94);
+  filter: blur(4px);
+  transition: opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.85s cubic-bezier(0.16, 1, 0.3, 1),
+              filter 0.85s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform, filter;
+}
+
+.clyra-scroll-item.is-visible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  filter: blur(0px);
+}
+
+/* Butter-Smooth Card & Button Hover Physics */
+.clyra-interactive-card {
+  transform: translateY(0px) scale(1);
+  transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1),
+              box-shadow 0.5s cubic-bezier(0.2, 0.8, 0.2, 1),
+              border-color 0.4s cubic-bezier(0.2, 0.8, 0.2, 1),
+              background-color 0.4s ease;
+  will-change: transform, box-shadow, border-color;
+  backface-visibility: hidden;
+}
+
+.clyra-interactive-card:hover {
+  transform: translateY(-5px) scale(1.008);
+  border-color: rgba(255, 230, 0, 0.5);
+  box-shadow: 0 28px 65px rgba(0, 0, 0, 0.95), 0 0 35px rgba(255, 230, 0, 0.12);
+}
+
+.clyra-interactive-btn {
+  transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1),
+              box-shadow 0.35s cubic-bezier(0.2, 0.8, 0.2, 1),
+              background-color 0.3s ease,
+              border-color 0.3s ease,
+              color 0.3s ease;
+  will-change: transform, box-shadow;
+}
+
+.clyra-interactive-btn:hover {
+  transform: translateY(-2px) scale(1.025);
+}
+
+.clyra-interactive-btn:active {
+  transform: translateY(0px) scale(0.975);
+}
+
+.clyra-glow-orb {
+  transition: transform 0.7s cubic-bezier(0.2, 0.8, 0.2, 1),
+              opacity 0.7s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+/* -------------------------------------------------------
+   SPLINE 3D VIEWER — Force Full Screen Coverage
+   ------------------------------------------------------- */
+
+#spline-canvas {
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  display: block !important;
+  background-color: #070709 !important;
+  cursor: default !important;
+}

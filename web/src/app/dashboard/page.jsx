@@ -11,18 +11,26 @@ import {
   Bell,
   Calendar,
   ChevronDown,
+  ChevronRight,
   Clock,
+  Command,
   ExternalLink,
   FileText,
   HelpCircle,
+  Hexagon,
+  Home,
   Layers,
   LayoutGrid,
   Link2,
   Lock,
   LogOut,
   Mail,
+  Megaphone,
+  Moon,
   MoreHorizontal,
   Package,
+  PanelLeftClose,
+  PanelLeftOpen,
   Plus,
   RefreshCw,
   Search,
@@ -32,6 +40,7 @@ import {
   Sparkles,
   Star,
   TrendingUp,
+  User,
   UserCheck,
   Users,
   Video,
@@ -51,6 +60,7 @@ export default function DashboardPage() {
   const [activeTab, setActiveTab] = useState("meetings");
   const [activeNav, setActiveNav] = useState("dashboard");
   const [searchQuery, setSearchQuery] = useState("");
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
 
   useEffect(() => {
     const fetchCurrentUser = async () => {
@@ -160,211 +170,267 @@ export default function DashboardPage() {
     },
   ];
 
+  /* Sidebar nav items matching the reference */
+  const sidebarNavItems = [
+    { id: "dashboard", label: "Home", icon: Home },
+    { id: "leads", label: "Leads", icon: Megaphone },
+    { id: "contacts", label: "Contacts", icon: Users },
+    { id: "analytics", label: "Analytics", icon: BarChart3 },
+    { id: "integrations", label: "Integrations", icon: Settings },
+  ];
+
   return (
     <div className="min-h-screen w-full bg-[#0F0F10] flex flex-col lg:flex-row font-sans text-white">
       {/* ================= SIDEBAR ================= */}
-      <aside className="w-full lg:w-[280px] bg-[#151517] border-b lg:border-b-0 lg:border-r border-[#2A2A30] p-5 lg:p-6 flex flex-col justify-between shrink-0 lg:min-h-screen">
-        <div className="space-y-6">
-          {/* Logo */}
-          <div className="flex items-center gap-3 px-1">
-            <img
-              src="/assets/logo.png"
-              alt="CLYRA"
-              className="w-8 h-8 object-contain drop-shadow-[0_0_8px_rgba(255,230,0,0.35)]"
-            />
-            <span className="font-bold text-xl tracking-tight text-white">
-              {workspace?.name || "CLYRA"}
-            </span>
-          </div>
-
-          {/* Search */}
-          <div className="relative">
-            <Search className="w-4 h-4 text-[#85858D] absolute left-3.5 top-1/2 -translate-y-1/2" />
-            <input
-              type="text"
-              placeholder="Search workspace..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full h-10 bg-[#0F0F10] border border-[#2A2A30] hover:border-[#45454D] focus:border-[#FFE600] focus:ring-1 focus:ring-[#FFE600] focus:shadow-[0_0_15px_rgba(255,230,0,0.10)] rounded-lg pl-9 pr-3 text-xs text-white placeholder-[#707078] transition-all"
-            />
-          </div>
-
-          {/* 2x2 Navigation Grid */}
-          <div className="grid grid-cols-2 gap-2">
-            <button
-              onClick={() => setActiveNav("dashboard")}
-              className={`flex flex-col items-center justify-center p-3.5 rounded-xl transition-all duration-200 cursor-pointer ${
-                activeNav === "dashboard"
-                  ? "bg-[#1E1E22] border border-[#FFE600]/55 text-white shadow-[0_0_15px_rgba(255,230,0,0.15)]"
-                  : "bg-[#0F0F10] hover:bg-[#1E1E22] border border-[#2A2A30] text-[#85858D] hover:text-white"
-              }`}
-            >
-              <LayoutGrid className={`w-5 h-5 mb-1.5 ${activeNav === "dashboard" ? "text-[#FFE600]" : "text-[#85858D]"}`} />
-              <span className="text-[11px] font-semibold">Dashboard</span>
-            </button>
-
-            <button
-              onClick={() => setActiveNav("employees")}
-              className={`flex flex-col items-center justify-center p-3.5 rounded-xl transition-all duration-200 cursor-pointer ${
-                activeNav === "employees"
-                  ? "bg-[#1E1E22] border border-[#FFE600]/55 text-white shadow-[0_0_15px_rgba(255,230,0,0.15)]"
-                  : "bg-[#0F0F10] hover:bg-[#1E1E22] border border-[#2A2A30] text-[#85858D] hover:text-white"
-              }`}
-            >
-              <Users className={`w-5 h-5 mb-1.5 ${activeNav === "employees" ? "text-[#FFE600]" : "text-[#85858D]"}`} />
-              <span className="text-[11px] font-semibold">Employees</span>
-            </button>
-
-            <button
-              onClick={() => setActiveNav("time")}
-              className={`flex flex-col items-center justify-center p-3.5 rounded-xl transition-all duration-200 cursor-pointer ${
-                activeNav === "time"
-                  ? "bg-[#1E1E22] border border-[#FFE600]/55 text-white shadow-[0_0_15px_rgba(255,230,0,0.15)]"
-                  : "bg-[#0F0F10] hover:bg-[#1E1E22] border border-[#2A2A30] text-[#85858D] hover:text-white"
-              }`}
-            >
-              <Clock className={`w-5 h-5 mb-1.5 ${activeNav === "time" ? "text-[#FFE600]" : "text-[#85858D]"}`} />
-              <span className="text-[11px] font-semibold">Time Manage</span>
-            </button>
-
-            <button
-              onClick={() => setActiveNav("finance")}
-              className={`flex flex-col items-center justify-center p-3.5 rounded-xl transition-all duration-200 cursor-pointer ${
-                activeNav === "finance"
-                  ? "bg-[#1E1E22] border border-[#FFE600]/55 text-white shadow-[0_0_15px_rgba(255,230,0,0.15)]"
-                  : "bg-[#0F0F10] hover:bg-[#1E1E22] border border-[#2A2A30] text-[#85858D] hover:text-white"
-              }`}
-            >
-              <Wallet className={`w-5 h-5 mb-1.5 ${activeNav === "finance" ? "text-[#FFE600]" : "text-[#85858D]"}`} />
-              <span className="text-[11px] font-semibold">Finance</span>
-            </button>
-
-            <button
-              onClick={() => setActiveNav("payroll")}
-              className={`flex flex-col items-center justify-center p-3.5 rounded-xl transition-all duration-200 cursor-pointer ${
-                activeNav === "payroll"
-                  ? "bg-[#1E1E22] border border-[#FFE600]/55 text-white shadow-[0_0_15px_rgba(255,230,0,0.15)]"
-                  : "bg-[#0F0F10] hover:bg-[#1E1E22] border border-[#2A2A30] text-[#85858D] hover:text-white"
-              }`}
-            >
-              <FileText className={`w-5 h-5 mb-1.5 ${activeNav === "payroll" ? "text-[#FFE600]" : "text-[#85858D]"}`} />
-              <span className="text-[11px] font-semibold">Payroll</span>
-            </button>
-
-            <button
-              onClick={() => setActiveNav("reviews")}
-              className={`flex flex-col items-center justify-center p-3.5 rounded-xl transition-all duration-200 cursor-pointer ${
-                activeNav === "reviews"
-                  ? "bg-[#1E1E22] border border-[#FFE600]/55 text-white shadow-[0_0_15px_rgba(255,230,0,0.15)]"
-                  : "bg-[#0F0F10] hover:bg-[#1E1E22] border border-[#2A2A30] text-[#85858D] hover:text-white"
-              }`}
-            >
-              <Star className={`w-5 h-5 mb-1.5 ${activeNav === "reviews" ? "text-[#FFE600]" : "text-[#85858D]"}`} />
-              <span className="text-[11px] font-semibold">Reviews</span>
-            </button>
-          </div>
-
-          {/* Favorite Section */}
-          <div className="space-y-2 pt-1">
-            <button className="flex items-center gap-1.5 text-xs font-semibold text-zinc-400 hover:text-white w-full text-left transition-colors">
-              <ChevronDown className="w-3.5 h-3.5" />
-              <span>Favorites</span>
-            </button>
-            <div className="space-y-1 pl-2 text-xs font-medium text-zinc-400">
-              <div className="flex items-center gap-2 py-1 px-2 rounded-lg hover:bg-white/5 hover:text-white cursor-pointer transition-colors">
-                <div className="w-1.5 h-1.5 rounded-full bg-[#E8FD07] shadow-[0_0_6px_#E8FD07]" />
-                <span>Opportunity Stages</span>
-              </div>
-              <div className="flex items-center gap-2 py-1 px-2 rounded-lg hover:bg-white/5 hover:text-white cursor-pointer transition-colors">
-                <div className="w-1.5 h-1.5 rounded-full bg-[#E8FD07] shadow-[0_0_6px_#E8FD07]" />
-                <span>Key Metrics</span>
-              </div>
-              <div className="flex items-center gap-2 py-1 px-2 rounded-lg hover:bg-white/5 hover:text-white cursor-pointer transition-colors">
-                <div className="w-1.5 h-1.5 rounded-full bg-[#E8FD07] shadow-[0_0_6px_#E8FD07]" />
-                <span>Product Plan</span>
-              </div>
+      <aside
+        className={`${
+          sidebarCollapsed ? "lg:w-[78px]" : "lg:w-[272px]"
+        } w-full bg-[#131316] border-b lg:border-b-0 lg:border-r border-[#1F1F24] flex flex-col justify-between shrink-0 lg:min-h-screen transition-all duration-300 ease-in-out`}
+      >
+        <div className="flex flex-col gap-1">
+          {/* ---- Logo Row ---- */}
+          <div className={`flex items-center justify-between px-5 pt-6 pb-2 ${sidebarCollapsed ? "px-4" : ""}`}>
+            <div className="flex items-center gap-2.5 min-w-0">
+              <img
+                src="/assets/bg-removed-logo.png"
+                alt="CLYRA"
+                className="w-7 h-7 object-contain shrink-0 drop-shadow-[0_0_10px_rgba(232,253,7,0.5)]"
+              />
+              {!sidebarCollapsed && (
+                <span className="text-[15px] font-bold tracking-tight text-white whitespace-nowrap">
+                  CLYRA
+                </span>
+              )}
             </div>
+
+            <button
+              onClick={() => setSidebarCollapsed(!sidebarCollapsed)}
+              className="w-8 h-8 rounded-lg border border-[#2A2A30] hover:border-[#FFE600]/30 bg-[#1A1A1E] hover:bg-[#222228] flex items-center justify-center text-[#707078] hover:text-white transition-all"
+              title={sidebarCollapsed ? "Expand sidebar" : "Collapse sidebar"}
+            >
+              {sidebarCollapsed ? (
+                <PanelLeftOpen className="w-4 h-4" />
+              ) : (
+                <PanelLeftClose className="w-4 h-4" />
+              )}
+            </button>
           </div>
 
-          {/* Marketing Section */}
-          <div className="space-y-2 pt-1">
-            <button className="flex items-center gap-1.5 text-xs font-semibold text-zinc-400 hover:text-white w-full text-left transition-colors">
-              <ChevronDown className="w-3.5 h-3.5" />
-              <span>Marketing Channels</span>
+          {/* ---- Workspace Selector ---- */}
+          <div className={`pt-4 pb-1 ${sidebarCollapsed ? "px-3" : "px-4"}`}>
+            <button
+              className={`w-full flex items-center gap-3 rounded-xl bg-[#1C1C21] transition-all ${
+                sidebarCollapsed ? "p-2.5 justify-center" : "px-3.5 py-3"
+              }`}
+              style={{
+                boxShadow: "0 2px 8px rgba(0,0,0,0.35), 0 1px 3px rgba(0,0,0,0.25), inset 0 1px 0 rgba(255,255,255,0.04)",
+              }}
+            >
+              {/* Avatar initial — neutral raised style matching reference */}
+              <div className="w-7 h-7 rounded-lg bg-[#28282F] flex items-center justify-center shrink-0"
+                style={{ boxShadow: "inset 0 1px 0 rgba(255,255,255,0.06), 0 1px 2px rgba(0,0,0,0.3)" }}
+              >
+                <span className="text-xs font-semibold text-[#B8B8BE]">
+                  {(workspace?.name || "C")[0].toUpperCase()}
+                </span>
+              </div>
+
+              {!sidebarCollapsed && (
+                <>
+                  <span className="text-[13px] font-semibold text-white truncate flex-1 text-left">
+                    {workspace?.name || "CLYRA"}
+                  </span>
+                  <ChevronDown className="w-4 h-4 text-[#707078] shrink-0" />
+                </>
+              )}
             </button>
-            <div className="space-y-1.5">
-              <div className="flex items-center gap-2.5 px-3 py-2 rounded-xl bg-[#14151B] border border-white/5 text-xs font-medium text-zinc-300 hover:bg-[#1C1D24] hover:border-white/15 hover:text-white cursor-pointer transition-all shadow-xs">
-                <Search className="w-3.5 h-3.5 text-[#E8FD07]" />
-                <span>Product Inquiries</span>
-              </div>
-              <div className="flex items-center gap-2.5 px-3 py-2 rounded-xl bg-[#14151B] border border-white/5 text-xs font-medium text-zinc-300 hover:bg-[#1C1D24] hover:border-white/15 hover:text-white cursor-pointer transition-all shadow-xs">
-                <Mail className="w-3.5 h-3.5 text-[#E8FD07]" />
-                <span>Email Automations</span>
-              </div>
-              <div className="flex items-center gap-2.5 px-3 py-2 rounded-xl bg-[#14151B] border border-white/5 text-xs font-medium text-zinc-300 hover:bg-[#1C1D24] hover:border-white/15 hover:text-white cursor-pointer transition-all shadow-xs">
-                <Calendar className="w-3.5 h-3.5 text-[#E8FD07]" />
-                <span>Integrations</span>
-              </div>
-              <div className="flex items-center gap-2.5 px-3 py-2 rounded-xl bg-[#14151B] border border-white/5 text-xs font-medium text-zinc-300 hover:bg-[#1C1D24] hover:border-white/15 hover:text-white cursor-pointer transition-all shadow-xs">
-                <LayoutGrid className="w-3.5 h-3.5 text-[#E8FD07]" />
-                <span>Chat Widget</span>
-              </div>
-              <div className="flex items-center gap-2.5 px-3 py-2 rounded-xl bg-[#14151B] border border-white/5 text-xs font-medium text-zinc-300 hover:bg-[#1C1D24] hover:border-white/15 hover:text-white cursor-pointer transition-all shadow-xs">
-                <FileText className="w-3.5 h-3.5 text-[#E8FD07]" />
-                <span>Knowledge Base</span>
-              </div>
-            </div>
           </div>
+
+          {/* ---- Navigation List ---- */}
+          <nav className={`flex flex-col gap-1 pt-4 ${sidebarCollapsed ? "px-3" : "px-4"}`}>
+            {sidebarNavItems.map((item) => {
+              const isActive = activeNav === item.id;
+              const Icon = item.icon;
+
+              return (
+                <button
+                  key={item.id}
+                  onClick={() => setActiveNav(item.id)}
+                  className={`group relative flex items-center gap-3 rounded-xl transition-all duration-200 ${
+                    sidebarCollapsed
+                      ? "w-full p-3 justify-center"
+                      : "w-full px-4 py-3"
+                  } ${
+                    isActive
+                      ? "bg-[#1C1C21] text-white"
+                      : "text-[#85858D] hover:text-white hover:bg-[#1A1A1E]"
+                  }`}
+                  style={
+                    isActive
+                      ? {
+                          boxShadow:
+                            "0 2px 8px rgba(0,0,0,0.35), 0 1px 3px rgba(0,0,0,0.25), inset 0 1px 0 rgba(255,255,255,0.04)",
+                        }
+                      : undefined
+                  }
+                >
+                  {/* Active accent bar (right edge gradient glow) */}
+                  {isActive && (
+                    <span
+                      className="absolute right-0 top-1/2 -translate-y-1/2 w-[3px] rounded-l-full"
+                      style={{
+                        height: "60%",
+                        background:
+                          "linear-gradient(180deg, #FFE600 0%, #7B3DFF 60%, #FF2DAD 100%)",
+                        boxShadow:
+                          "0 0 12px rgba(255,230,0,0.4), 0 0 24px rgba(123,61,255,0.3)",
+                      }}
+                    />
+                  )}
+
+                  {/* Active background glow overlay */}
+                  {isActive && (
+                    <span
+                      className="absolute inset-0 rounded-xl pointer-events-none"
+                      style={{
+                        background:
+                          "linear-gradient(90deg, transparent 40%, rgba(123,61,255,0.06) 70%, rgba(255,45,173,0.08) 100%)",
+                      }}
+                    />
+                  )}
+
+                  <Icon
+                    className={`w-[18px] h-[18px] shrink-0 relative z-10 transition-colors duration-200 ${
+                      isActive ? "text-[#FFE600]" : "text-[#707078] group-hover:text-white"
+                    }`}
+                  />
+
+                  {!sidebarCollapsed && (
+                    <span className="text-[13px] font-medium relative z-10">
+                      {item.label}
+                    </span>
+                  )}
+                </button>
+              );
+            })}
+          </nav>
         </div>
 
-        {/* Bottom User Pill */}
-        <div className="pt-6 relative">
-          <div className="flex items-center gap-2">
-            <div
-              onClick={() => setShowProfileMenu(!showProfileMenu)}
-              className="flex-1 bg-[#16171E] border border-white/10 hover:border-[#E8FD07]/30 text-white rounded-2xl p-2.5 flex items-center justify-between cursor-pointer transition-all shadow-md"
-            >
-              <div className="flex items-center gap-2.5 min-w-0">
-                <img
-                  src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80"
-                  alt="Avatar"
-                  className="w-8 h-8 rounded-full object-cover shrink-0 border border-white/20"
-                />
-                <div className="min-w-0">
-                  <p className="text-xs font-bold truncate text-white leading-tight">
-                    {user?.name || "Workspace Member"}
-                  </p>
-                  <p className="text-[10px] text-zinc-400 truncate capitalize">
-                    {user?.role === "owner" ? "Workspace Owner" : user?.role || "Team Member"}
-                  </p>
-                </div>
-              </div>
-              <ChevronDown className="w-4 h-4 text-zinc-400 shrink-0 ml-1" />
-            </div>
-
-            {/* Notification Bell */}
-            <button className="w-11 h-11 rounded-2xl bg-[#16171E] border border-white/10 hover:border-[#E8FD07]/40 flex items-center justify-center text-zinc-300 hover:text-[#E8FD07] transition-all shadow-md shrink-0 cursor-pointer">
-              <Bell className="w-4 h-4" />
-            </button>
-          </div>
-
-          {/* Profile Dropdown */}
+        {/* ---- Bottom: User Profile ---- */}
+        <div className={`pb-5 relative ${sidebarCollapsed ? "px-3" : "px-4"}`}>
+          {/* Profile Dropdown Menu (Exact Reference Design) */}
           {showProfileMenu && (
-            <div className="absolute bottom-16 left-0 right-0 bg-[#14151B] rounded-2xl border border-white/15 shadow-2xl p-2 z-50 space-y-1 backdrop-blur-xl">
-              <div className="px-3 py-2 border-b border-white/5">
-                <p className="text-xs font-bold text-white">{user?.name}</p>
-                <p className="text-[10px] text-zinc-400 truncate">{user?.email}</p>
-              </div>
+            <div
+              className="absolute bottom-[calc(100%+8px)] left-3 right-3 bg-[#18181D] border border-white/[0.08] rounded-2xl p-1.5 z-50 space-y-0.5 backdrop-blur-xl animate-in fade-in slide-in-from-bottom-2 duration-150"
+              style={{
+                boxShadow:
+                  "0 12px 36px rgba(0,0,0,0.65), 0 2px 8px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.06)",
+              }}
+            >
+              {/* Profile (Active/Selected look) */}
+              <button
+                onClick={() => setShowProfileMenu(false)}
+                className="w-full relative flex items-center gap-3 px-3 py-2 rounded-xl bg-[#24242A] text-white text-[13px] font-medium transition-colors text-left"
+              >
+                <span className="w-0.5 h-3.5 bg-white rounded-full shrink-0 -ml-0.5 mr-0.5" />
+                <User className="w-4 h-4 text-white shrink-0" />
+                <span>Profile</span>
+              </button>
+
+              {/* Settings */}
+              <button
+                onClick={() => setShowProfileMenu(false)}
+                className="w-full flex items-center gap-3 px-3 py-2 rounded-xl text-[#B8B8C2] hover:text-white hover:bg-[#202026] text-[13px] font-medium transition-colors text-left"
+              >
+                <Hexagon className="w-4 h-4 text-[#8A8A96] shrink-0" />
+                <span>Settings</span>
+              </button>
+
+              {/* Theme */}
+              <button
+                onClick={() => setShowProfileMenu(false)}
+                className="w-full flex items-center gap-3 px-3 py-2 rounded-xl text-[#B8B8C2] hover:text-white hover:bg-[#202026] text-[13px] font-medium transition-colors text-left"
+              >
+                <Moon className="w-4 h-4 text-[#8A8A96] shrink-0" />
+                <span className="flex-1">Theme</span>
+                <ChevronRight className="w-3.5 h-3.5 text-[#65656E] shrink-0" />
+              </button>
+
+              {/* Upgrade */}
+              <button
+                onClick={() => setShowProfileMenu(false)}
+                className="w-full flex items-center gap-3 px-3 py-2 rounded-xl text-[#B8B8C2] hover:text-white hover:bg-[#202026] text-[13px] font-medium transition-colors text-left"
+              >
+                <Sparkles className="w-4 h-4 text-[#8A8A96] shrink-0" />
+                <span>Upgrade</span>
+              </button>
+
+              {/* Divider */}
+              <div className="my-1 border-t border-white/[0.08]" />
+
+              {/* Keyboard shortcuts */}
+              <button
+                onClick={() => setShowProfileMenu(false)}
+                className="w-full flex items-center gap-3 px-3 py-2 rounded-xl text-[#B8B8C2] hover:text-white hover:bg-[#202026] text-[13px] font-medium transition-colors text-left"
+              >
+                <Command className="w-4 h-4 text-[#8A8A96] shrink-0" />
+                <span>Keyboard shortcuts</span>
+              </button>
+
+              {/* Help center */}
+              <button
+                onClick={() => setShowProfileMenu(false)}
+                className="w-full flex items-center gap-3 px-3 py-2 rounded-xl text-[#B8B8C2] hover:text-white hover:bg-[#202026] text-[13px] font-medium transition-colors text-left"
+              >
+                <HelpCircle className="w-4 h-4 text-[#8A8A96] shrink-0" />
+                <span>Help center</span>
+              </button>
+
+              {/* Log out */}
               <button
                 onClick={handleLogout}
                 disabled={loggingOut}
-                className="w-full flex items-center gap-2 px-3 py-2 text-xs font-semibold text-rose-400 hover:bg-rose-950/40 rounded-xl transition-colors cursor-pointer"
+                className="w-full flex items-center gap-3 px-3 py-2 rounded-xl text-[#B8B8C2] hover:text-rose-400 hover:bg-rose-950/30 text-[13px] font-medium transition-colors text-left group cursor-pointer"
               >
-                <LogOut className="w-3.5 h-3.5" />
+                <LogOut className="w-4 h-4 text-[#8A8A96] group-hover:text-rose-400 shrink-0" />
                 <span>{loggingOut ? "Logging out..." : "Log out"}</span>
               </button>
             </div>
           )}
+
+          {/* Simple Closed Pill (Matching Nimbus Top Card) */}
+          <button
+            onClick={() => setShowProfileMenu(!showProfileMenu)}
+            className={`w-full flex items-center gap-3 rounded-xl bg-[#1C1C21] transition-all hover:bg-[#222228] ${
+              sidebarCollapsed ? "p-2.5 justify-center" : "px-3.5 py-3"
+            }`}
+            style={{
+              boxShadow:
+                "0 2px 8px rgba(0,0,0,0.35), 0 1px 3px rgba(0,0,0,0.25), inset 0 1px 0 rgba(255,255,255,0.04)",
+            }}
+          >
+            {/* Avatar Image */}
+            <div className="w-7 h-7 rounded-lg overflow-hidden shrink-0 bg-[#28282F] flex items-center justify-center border border-white/10">
+              <img
+                src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80"
+                alt="Avatar"
+                className="w-full h-full object-cover"
+              />
+            </div>
+
+            {!sidebarCollapsed && (
+              <>
+                <span className="text-[13px] font-semibold text-white truncate flex-1 text-left">
+                  {user?.name || "Jane Doe"}
+                </span>
+                <ChevronDown
+                  className={`w-4 h-4 text-[#707078] shrink-0 transition-transform duration-200 ${
+                    showProfileMenu ? "rotate-180 text-white" : ""
+                  }`}
+                />
+              </>
+            )}
+          </button>
         </div>
       </aside>
 
@@ -380,8 +446,7 @@ export default function DashboardPage() {
           </div>
 
           <div className="flex items-center gap-3">
-            <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#151517] border border-[#FFE600]/40 text-xs font-medium text-[#FFE600] shadow-xs">
-              <div className="w-2 h-2 rounded-full bg-[#FFE600] shadow-[0_0_8px_#FFE600] animate-pulse" />
+            <div className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-[#151517] border border-[#FFE600]/40 text-xs font-medium text-[#FFE600] shadow-xs">
               <span>AI Agent Active</span>
             </div>
 
@@ -484,7 +549,7 @@ export default function DashboardPage() {
                   </div>
 
                   <div className="flex items-center gap-3">
-                    <span className="hidden sm:inline-block text-[10px] font-semibold uppercase tracking-wider text-[#22C55E] bg-[rgba(34,197,94,0.08)] border border-[rgba(34,197,94,0.55)] px-2.5 py-0.5 rounded-full">
+                    <span className="hidden sm:inline-block text-[10px] font-semibold uppercase tracking-wider text-[#22C55E] bg-[rgba(34,197,94,0.08)] border border-[rgba(34,197,94,0.55)] px-2.5 py-0.5 rounded-lg">
                       {member.status}
                     </span>
                     <span className="text-xs text-[#85858D]">{member.department}</span>
@@ -505,7 +570,6 @@ export default function DashboardPage() {
               <div className="space-y-2">
                 <div className="flex items-center justify-between p-3 rounded-lg bg-[#0F0F10] border border-[#FFE600]/40">
                   <div className="flex items-center gap-2.5">
-                    <div className="w-2 h-2 rounded-full bg-[#FFE600] shadow-[0_0_6px_#FFE600]" />
                     <span className="text-xs font-medium text-white">Shopify Storefront</span>
                   </div>
                   <span className="text-[11px] text-[#FFE600] font-semibold">Connected</span>
@@ -513,7 +577,6 @@ export default function DashboardPage() {
 
                 <div className="flex items-center justify-between p-3 rounded-lg bg-[#0F0F10] border border-[#2A2A30]">
                   <div className="flex items-center gap-2.5">
-                    <div className="w-2 h-2 rounded-full bg-[#22C55E] shadow-[0_0_6px_#22C55E]" />
                     <span className="text-xs font-medium text-white">Live Web Chat</span>
                   </div>
                   <span className="text-[11px] text-[#22C55E] font-medium">Ready</span>
@@ -521,7 +584,6 @@ export default function DashboardPage() {
 
                 <div className="flex items-center justify-between p-3 rounded-lg bg-[#0F0F10] border border-[#2A2A30]">
                   <div className="flex items-center gap-2.5">
-                    <div className="w-2 h-2 rounded-full bg-[#55555C]" />
                     <span className="text-xs font-medium text-[#85858D]">WhatsApp Business</span>
                   </div>
                   <span className="text-[11px] text-[#707078] font-medium">Setup</span>

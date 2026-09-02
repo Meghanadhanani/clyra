@@ -57,6 +57,9 @@ Do not make the UI look like a gaming website.
 
 Every new component must visually belong to the CLYRA design system.
 
+STRICT PROJECT RULES:
+- NEVER use dot-type status indicators or pulsing dots (`<span className="w-1.5 h-1.5 rounded-full bg-... animate-pulse" />` or circular dot badges) anywhere in the project. Use clean typography, badges, or icon indicators instead.
+
 Before finishing a UI task, verify the implementation against:
 
 @clyra-design-system.md
